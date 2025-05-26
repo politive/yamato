@@ -7,6 +7,6 @@ if [[ -x "$BREW_GIT_PATH" ]]; then
 else
   run brew install git
   log_installed "Git"
-  brew install gnupg
+  run brew install gnupg
   log_installed "GnuPG"
 fi
