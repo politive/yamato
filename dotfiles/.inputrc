@@ -1,0 +1,5 @@
+$if Bash
+  set colored-stats on # show colors in completion (e.g., for dirs)
+  set completion-ignore-case on # ignore case during completion
+  set mark-symlinked-directories on # treat symlinked dirs as valid for completion
+$endif
