@@ -11,8 +11,8 @@ for pkg in "${packages[@]}"; do
   if echo "$installed" | grep -q "^$pkg$"; then
     log_skipped "$pkg"
   else
-    brew install "$pkg" >/dev/null 2>&1
-    log_installed "$pkg."
+    run brew install "$pkg"
+    log_installed "$pkg"
   fi
 done
 

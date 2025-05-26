@@ -18,8 +18,14 @@ git clone https://github.com/politive/yamato.git $HOME/.local/share/yamato >/dev
 
 YAMATO_PATH="$HOME/.local/share/yamato"
 
-echo "Loading library files"
+echo "Loading library: log"
 source "$YAMATO_PATH/lib/log.sh"
+
+echo "Loading library: args"
+source "$YAMATO_PATH/lib/args.sh" "$@"
+
+echo "Loading library: run"
+source "$YAMATO_PATH/lib/run.sh"
 
 echo "Installation starting..."
 source $YAMATO_PATH/install.sh
