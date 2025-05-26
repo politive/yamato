@@ -14,7 +14,7 @@ echo ""
 
 echo "Cloning Yamato..."
 rm -rf $HOME/.local/share/yamato
-git clone https://github.com/politive/yamato.git $HOME/.local/share/yamato >/dev/null
+git clone https://github.com/politive/yamato.git $HOME/.local/share/yamato >/dev/null 2>&1
 
 YAMATO_PATH="$HOME/.local/share/yamato"
 
