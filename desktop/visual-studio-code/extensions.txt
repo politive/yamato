@@ -1,2 +1,5 @@
 # editorconfig
 editorconfig.editorconfig
+
+# markdown lint
+yzhang.markdown-all-in-one

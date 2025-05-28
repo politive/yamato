@@ -6,4 +6,20 @@ else
   log_installed "1Password"
 fi
 
-source "$YAMATO_PATH/desktop/visual-studio-code/extensions.sh"
+
+TARGET="$HOME/Library/Application Support/Code/User/settings.json"
+SOURCE="$YAMATO_PATH/desktop/visual-studio-code/settings.json"
+
+mkdir -p "$(dirname "$TARGET")"
+
+if [ -L "$TARGET" ]; then
+  if [ "$(readlink "$TARGET")" = "$SOURCE" ]; then
+    log_synlink_skipped "$TARGET"
+  else
+    ln -sf "$SOURCE" "$TARGET"
+    log_synlink_replaced "$TARGET"
+  fi
+else
+  ln -sf "$SOURCE" "$TARGET"
+  log_symlink "$TARGET"
+fi
