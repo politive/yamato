@@ -30,9 +30,13 @@ for f in "$YAMATO_PATH"/dotfiles/.*; do
   target="$HOME/$base"
 
   if [ -L "$target" ]; then
-    rm -f "$target"
-    ln -s "$f" "$target"
-    log_synlink_replaced "$base"
+    if [ "$(readlink "$target")" = "$f" ]; then
+      log_synlink_skipped "$base"
+    else
+      rm -f "$target"
+      ln -s "$f" "$target"
+      log_synlink_replaced "$base"
+    fi
   elif [ -e "$target" ]; then
     log_skipped "$base"
   else
