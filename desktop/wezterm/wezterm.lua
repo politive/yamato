@@ -11,6 +11,8 @@ config.window_background_opacity = 0.80  -- Set window background opacity
 config.macos_window_background_blur = 30  -- Set background blur effect on macOS
 config.window_decorations = "RESIZE"  -- Window decorations (allow only resize)
 
+config.font = wezterm.font("HackGen Console NF")  -- Set the font to HackGen Console NF
+config.font_size = 14.0  -- Set the font size
 config.colors = {
   background = "#132238", -- Background color (deep blue)
 }
