@@ -14,4 +14,8 @@ if type brew &>/dev/null; then
 
   autoload -Uz compinit
   compinit
+
+  zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
+  zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
+  setopt mark_dirs
 fi
