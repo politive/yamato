@@ -3,3 +3,9 @@ editorconfig.editorconfig
 
 # markdown lint
 yzhang.markdown-all-in-one
+
+# lua lint
+sumneko.lua
+
+# markdown preview to github styles
+bierner.markdown-preview-github-styles
