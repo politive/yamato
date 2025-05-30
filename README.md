@@ -1,7 +1,10 @@
-<div style="text-align:center;margin-bottom:48px">
-  <img width="600px" src="./logo.png" />
-  <p style="padding-top:12px">A macOS bootstrapper for developers who want a clean setup with defaults.</p>
-</div>
+<p align="center">
+  <img src="./logo.png" width="600" alt="Logo" />
+</p>
+
+<p align="center">
+  A macOS bootstrapper for developers who want a clean setup with defaults.
+</p>
 
 ## 🚀 Quick Start
 
