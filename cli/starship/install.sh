@@ -8,7 +8,7 @@ else
 fi
 
 TARGET="$HOME/.config/starship.toml"
-SOURCE="$YAMATO_PATH/terminal/starship/starship.toml"
+SOURCE="$YAMATO_PATH/cli/starship/starship.toml"
 
 mkdir -p "$HOME/.config"
 
