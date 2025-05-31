@@ -16,6 +16,12 @@ for dir in $YAMATO_PATH/cli/*; do [ -f "$dir/install.sh" ] && source "$dir/insta
 # Install Desktop App
 for dir in $YAMATO_PATH/desktop/*; do [ -f "$dir/install.sh" ] && source "$dir/install.sh"; done
 
+# Install Docker
+source $YAMATO_PATH/docker/install.sh
+
+# Install Terminal
+source $YAMATO_PATH/terminal/install.sh
+
 # Create Symlink
 log_section "Create Symlinks"
 for f in "$YAMATO_PATH"/dotfiles/.*; do

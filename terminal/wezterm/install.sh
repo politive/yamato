@@ -1,4 +1,4 @@
-log_section "WezTerm"
+log_section "Install WezTerm"
 
 if command -v wezterm >/dev/null 2>&1; then
   log_skipped "WezTerm"
@@ -9,7 +9,7 @@ fi
 
 
 TARGET="$HOME/.config/wezterm/wezterm.lua"
-SOURCE="$YAMATO_PATH/desktop/wezterm/wezterm.lua"
+SOURCE="$YAMATO_PATH/terminal/wezterm/wezterm.lua"
 
 mkdir -p "$(dirname "$TARGET")"
 
