@@ -34,3 +34,11 @@ log_skipped() {
 log_failure() {
   echo "  ❌ $1 installation failed."
 }
+
+log_dryrun() {
+  echo "  📝 $1 (dry run)"
+}
+
+log_alert() {
+  echo "  ❗ $1"
+}
