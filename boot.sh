@@ -2,32 +2,29 @@
 set -euo pipefail
 
 ascii_art='
-_____.___.                      __
-\__  |   |____    _____ _____ _/  |_  ____
- /   |   \__  \  /     \\__  \\   __\/  _ \
- \____   |/ __ \|  Y Y  \/ __ \|  | (  <_> )
- / ______(____  /__|_|  (____  /__|  \____/
- \/           \/      \/     \/
+ ___ ___   _______   _______   _______   _______   _______
+|   |   | |   _   | |   |   | |   _   | |_     _| |       |
+ \     /  |       | |       | |       |   |   |   |   -   |
+  |___|   |___|___| |__|_|__| |___|___|   |___|   |_______|
 '
 echo -e "$ascii_art"
-echo ""
 
-echo "Cloning Yamato..."
-rm -rf $HOME/.local/share/yamato
-git clone https://github.com/politive/yamato.git $HOME/.local/share/yamato >/dev/null 2>&1
+if [ -d "$HOME/.local/share/yamato/.git" ]; then
+  git -C "$HOME/.local/share/yamato" pull --ff-only >/dev/null 2>&1
+else
+  git clone https://github.com/politive/yamato.git "$HOME/.local/share/yamato" >/dev/null 2>&1
+fi
 
 YAMATO_PATH="$HOME/.local/share/yamato"
-
-echo "Loading library: log"
 source "$YAMATO_PATH/lib/log.sh"
 
-echo "Loading library: args"
+log_section "Loading library: args"
 source "$YAMATO_PATH/lib/args.sh" "$@"
 
-echo "Loading library: run"
+log_section "Loading library: run"
 source "$YAMATO_PATH/lib/run.sh"
 
-echo "Installation starting..."
+log_section "Installation starting..."
 source $YAMATO_PATH/install.sh
 
 echo ""
