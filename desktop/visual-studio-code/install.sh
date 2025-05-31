@@ -1,9 +1,10 @@
-log_section "Visual Studio Code"
+log_section "Install Visual Studio Code"
+
 if command -v code >/dev/null 2>&1; then
   log_skipped "Visual Studio Code"
 else
   run brew install visual-studio-code
-  log_installed "1Password"
+  log_installed "Visual Studio Code"
 fi
 
 

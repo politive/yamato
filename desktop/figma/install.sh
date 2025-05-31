@@ -1,4 +1,4 @@
-log_section "Figma"
+log_section "Install Figma"
 
 if brew list --cask figma &>/dev/null; then
   log_skipped "Figma"

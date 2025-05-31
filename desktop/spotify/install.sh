@@ -1,4 +1,4 @@
-log_section "Spotify"
+log_section "Install Spotify"
 
 if brew list --cask spotify &>/dev/null; then
   log_skipped "Spotify"

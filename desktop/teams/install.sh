@@ -1,4 +1,4 @@
-log_section "Microsoft Teams"
+log_section "Install Microsoft Teams"
 
 if brew list --cask microsoft-teams &>/dev/null; then
   log_skipped "Microsoft Teams"
