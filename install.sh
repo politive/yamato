@@ -22,6 +22,10 @@ source $YAMATO_PATH/docker/install.sh
 # Install Terminal
 source $YAMATO_PATH/terminal/install.sh
 
+# Install Browser
+source $YAMATO_PATH/browser/install.sh
+
+
 # Create Symlink
 log_section "Create Symlinks"
 for f in "$YAMATO_PATH"/dotfiles/.*; do
