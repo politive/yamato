@@ -17,12 +17,12 @@ if [ -L "$TARGET" ]; then
   if [ "$(readlink "$TARGET")" = "$SOURCE" ]; then
     log_synlink_skipped "$(basename "$TARGET")"
   else
-    ln -sf "$SOURCE" "$TARGET"
+    run ln -sf "$SOURCE" "$TARGET"
     log_synlink_replaced "$(basename "$TARGET")"
   fi
 elif [ -e "$TARGET" ]; then
   log_skipped "$(basename "$TARGET")"
 else
-  ln -s "$SOURCE" "$TARGET"
+  run ln -s "$SOURCE" "$TARGET"
   log_symlink "$(basename "$TARGET")"
 fi

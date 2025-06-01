@@ -16,7 +16,7 @@ if [ -L "$TARGET" ]; then
   if [ "$(readlink "$TARGET")" = "$SOURCE" ]; then
     log_synlink_skipped "$TARGET"
   else
-    ln -sf "$SOURCE" "$TARGET"
+    run ln -sf "$SOURCE" "$TARGET"
     log_synlink_replaced "$TARGET"
   fi
 else

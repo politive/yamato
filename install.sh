@@ -50,13 +50,13 @@ for f in "$YAMATO_PATH"/dotfiles/.*; do
       log_synlink_skipped "$base"
     else
       rm -f "$target"
-      ln -s "$f" "$target"
+      run ln -s "$f" "$target"
       log_synlink_replaced "$base"
     fi
   elif [ -e "$target" ]; then
     log_skipped "$base"
   else
-    ln -s "$f" "$target"
+    run ln -s "$f" "$target"
     log_symlink "$base"
   fi
 done
