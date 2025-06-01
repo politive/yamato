@@ -1,11 +1,3 @@
-log_section "Install Docker Compose"
-if command -v docker-compose &>/dev/null; then
-  log_skipped "docker-compose"
-else
-  run brew install docker-compose
-  log_installed "docker-compose"
-fi
-
 PLUGIN_DIR="$HOME/.docker/cli-plugins"
 PLUGIN_PATH="$PLUGIN_DIR/docker-compose"
 BREW_COMPOSE_BIN="$(brew --prefix docker-compose)/bin/docker-compose"
