@@ -17,36 +17,18 @@ for dir in $YAMATO_PATH/cli/*; do [ -f "$dir/install.sh" ] && source "$dir/insta
 for dir in $YAMATO_PATH/desktop/*; do [ -f "$dir/install.sh" ] && source "$dir/install.sh"; done
 
 # Install Docker
-if [ "$MODE" = "omakase" ] || [ "$MODE" = "interactive" ]; then
-  if [ -f "$YAMATO_PATH/docker/install.$MODE.sh" ]; then
-    source "$YAMATO_PATH/docker/install.$MODE.sh"
-  else
-    source "$YAMATO_PATH/docker/install.sh"
-  fi
-else
-  source "$YAMATO_PATH/docker/install.sh"
+if [ -f "$YAMATO_PATH/docker/install.$MODE.sh" ]; then
+  source "$YAMATO_PATH/docker/install.$MODE.sh"
 fi
 
 # Install Terminal
-if [ "$MODE" = "omakase" ] || [ "$MODE" = "interactive" ]; then
-  if [ -f "$YAMATO_PATH/terminal/install.$MODE.sh" ]; then
-    source "$YAMATO_PATH/terminal/install.$MODE.sh"
-  else
-    source "$YAMATO_PATH/terminal/install.sh"
-  fi
-else
-  source "$YAMATO_PATH/terminal/install.sh"
+if [ -f "$YAMATO_PATH/terminal/install.$MODE.sh" ]; then
+  source "$YAMATO_PATH/terminal/install.$MODE.sh"
 fi
 
 # Install Browser
-if [ "$MODE" = "omakase" ] || [ "$MODE" = "interactive" ]; then
-  if [ -f "$YAMATO_PATH/browser/install.$MODE.sh" ]; then
-    source "$YAMATO_PATH/browser/install.$MODE.sh"
-  else
-    source "$YAMATO_PATH/browser/install.sh"
-  fi
-else
-  source "$YAMATO_PATH/browser/install.sh"
+if [ -f "$YAMATO_PATH/browser/install.$MODE.sh" ]; then
+  source "$YAMATO_PATH/browser/install.$MODE.sh"
 fi
 
 
