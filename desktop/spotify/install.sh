@@ -1,6 +1,6 @@
 log_section "Install Spotify"
 
-if brew list --cask spotify &>/dev/null; then
+if [ -d "/Applications/Spotify.app" ]; then
   log_skipped "Spotify"
 else
   run brew install spotify

@@ -1,5 +1,6 @@
 log_section "Installing Slack"
-if brew list --cask slack &>/dev/null; then
+
+if [ -d "/Applications/Slack.app" ]; then
   log_skipped "Slack"
 else
   run brew install --cask slack

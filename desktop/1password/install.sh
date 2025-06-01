@@ -1,6 +1,6 @@
-log_section " Install 1Password"
+log_section "Install 1Password"
 
-if brew list --cask 1password &>/dev/null; then
+if [ -d "/Applications/1Password.app" ]; then
   log_skipped "1Password"
 else
   run brew install 1password
