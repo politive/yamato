@@ -4,9 +4,17 @@ docker:
   # all_in_one: docker-desktop
 
   # For custom setup, comment out the all_in_one line above and specify cli, daemon, and tui below.
-  cli:
-    - docker
-    - docker-compose
-  daemon: colima
-  tui:
-    - lazydocker
+  # cli:
+  #   - docker
+  #   - docker-compose
+  # daemon: colima
+  # tui:
+  #   - lazydocker
+
+terminal:
+  # alacritty, iterm2, kitty, warp, wezterm
+  emulator: wezterm
+
+browser:
+  - arc
+  - google-chrome

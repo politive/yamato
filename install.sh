@@ -28,10 +28,26 @@ else
 fi
 
 # Install Terminal
-source $YAMATO_PATH/terminal/install.sh
+if [ "$MODE" = "omakase" ] || [ "$MODE" = "interactive" ]; then
+  if [ -f "$YAMATO_PATH/terminal/install.$MODE.sh" ]; then
+    source "$YAMATO_PATH/terminal/install.$MODE.sh"
+  else
+    source "$YAMATO_PATH/terminal/install.sh"
+  fi
+else
+  source "$YAMATO_PATH/terminal/install.sh"
+fi
 
 # Install Browser
-source $YAMATO_PATH/browser/install.sh
+if [ "$MODE" = "omakase" ] || [ "$MODE" = "interactive" ]; then
+  if [ -f "$YAMATO_PATH/browser/install.$MODE.sh" ]; then
+    source "$YAMATO_PATH/browser/install.$MODE.sh"
+  else
+    source "$YAMATO_PATH/browser/install.sh"
+  fi
+else
+  source "$YAMATO_PATH/browser/install.sh"
+fi
 
 
 # Create Symlink
