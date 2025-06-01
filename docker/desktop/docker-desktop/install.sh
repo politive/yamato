@@ -1,8 +1,8 @@
 log_section "Install Docker Desktop for Mac"
 
-if brew list --cask "docker" &>/dev/null; then
-  log_skipped "docker"
+if [ -d "/Applications/Docker.app" ]; then
+  log_skipped "Docker Desktop"
 else
   run brew install --cask docker
-  log_installed "docker"
+  log_installed "Docker Desktop"
 fi

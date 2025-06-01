@@ -1,6 +1,6 @@
 log_section "Install Rancher Desktop for Mac"
 
-if brew list --cask "rancher" &>/dev/null; then
+if [ -d "/Applications/Rancher Desktop.app" ]; then
   log_skipped "Rancher Desktop"
 else
   run brew install --cask rancher

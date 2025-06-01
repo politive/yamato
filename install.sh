@@ -17,7 +17,15 @@ for dir in $YAMATO_PATH/cli/*; do [ -f "$dir/install.sh" ] && source "$dir/insta
 for dir in $YAMATO_PATH/desktop/*; do [ -f "$dir/install.sh" ] && source "$dir/install.sh"; done
 
 # Install Docker
-source $YAMATO_PATH/docker/install.sh
+if [ "$MODE" = "omakase" ] || [ "$MODE" = "interactive" ]; then
+  if [ -f "$YAMATO_PATH/docker/install.$MODE.sh" ]; then
+    source "$YAMATO_PATH/docker/install.$MODE.sh"
+  else
+    source "$YAMATO_PATH/docker/install.sh"
+  fi
+else
+  source "$YAMATO_PATH/docker/install.sh"
+fi
 
 # Install Terminal
 source $YAMATO_PATH/terminal/install.sh

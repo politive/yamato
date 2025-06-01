@@ -1,0 +1,12 @@
+docker:
+  # Use all_in_one for all-in-one solutions (docker-desktop, podman-desktop, rancher-desktop).
+  # If all_in_one is specified, the custom settings below (cli/daemon/tui) will be ignored.
+  # all_in_one: docker-desktop
+
+  # For custom setup, comment out the all_in_one line above and specify cli, daemon, and tui below.
+  cli:
+    - docker
+    - docker-compose
+  daemon: colima
+  tui:
+    - lazydocker
