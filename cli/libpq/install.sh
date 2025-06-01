@@ -1,6 +1,6 @@
 log_section "Install libpq"
 
-if brew list libpq &>/dev/null; then
+if command -v pg_config >/dev/null 2>&1; then
   log_skipped "libpq"
 else
   run brew install libpq
