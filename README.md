@@ -12,9 +12,39 @@
 curl -L https://raw.githubusercontent.com/politive/yamato/main/boot.sh | bash
 ```
 
+### Mode
+
+| Mode                    | Description                                                                                                                                                |
+| ----------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| --omakase               | Installs a recommended set of tools and settings automatically.<br>Best for users who want a ready-to-use, best-practice environment with minimal prompts. |
+| --interactive (default) | Lets you interactively select each tool and setting during installation.<br>Best for users who want to customize their setup step by step.                 |
+| --preset \<file\>       | Installs tools and settings based on your custom YAML file.<br>*Best for advanced users who want to define their own setup in a file.*                     |
+
+### Examples
+
+```bash
+# Omakase (recommended defaults)
+curl -L https://raw.githubusercontent.com/politive/yamato/main/boot.sh --omakase | bash
+
+# Interactive (choose each tool)
+curl -L https://raw.githubusercontent.com/politive/yamato/main/boot.sh --interactive | bash
+
+# Use your own config file
+curl -L https://raw.githubusercontent.com/politive/yamato/main/boot.sh --preset mysetup.yml | bash
+```
+
 ## 🧰 Tools
 
-### Terminal
+### Text Editor
+| Tool                                                |
+| --------------------------------------------------- |
+| [alacritty](https://github.com/alacritty/alacritty) |
+| [iterm2](https://github.com/gnachman/iTerm2)        |
+| [kitty](https://github.com/kovidgoyal/kitty)        |
+| [warp](https://github.com/warpdotdev/warp)          |
+| [WezTerm](https://github.com/wez/wezterm)           |
+
+### Docker
 
 | Category        | Tool                                                                  |
 | --------------- | --------------------------------------------------------------------- |
@@ -36,7 +66,6 @@ curl -L https://raw.githubusercontent.com/politive/yamato/main/boot.sh | bash
 | [Spotify](https://www.spotify.com)                                                  | Music streaming service.                                    |
 | [Microsoft Teams](https://www.microsoft.com/en/microsoft-teams/group-chat-software) | Communication and collaboration platform for teams.         |
 | [Visual Studio Code](https://code.visualstudio.com)                                 | A powerful source-code editor with extensions preinstalled. |
-| [WezTerm](https://wezfurlong.org/wezterm/)                                          | A GPU-accelerated terminal emulator and multiplexer.        |
 
 ### Other CLI Tool
 
