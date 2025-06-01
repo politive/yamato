@@ -1,13 +1,19 @@
-PRESET_FILE="${PRESET_FILE:-$YAMATO_PATH/yamato.yml}"
+browser_labels=("Arc" "Brave Browser" "Google Chrome" "Microsoft Edge" "Opera" "Vivaldi" "Firefox" "None")
+browser_casks=("arc" "brave-browser" "google-chrome" "microsoft-edge" "opera" "vivaldi" "firefox" "")
 
-browsers=$(yq '.browser' "$PRESET_FILE")
+browsers=$(yq '.browser[]' "$PRESET_FILE")
 
-if [ -z "$browsers" ] || [ "$browsers" = "null" ]; then
-  log_alert "No browser specified in $PRESET_FILE (browser)."
-  exit 0
-fi
-
-for browser in $(yq '.browser[]' "$PRESET_FILE"); do
-  run brew install --cask "$browser"
-  log_installed "$browser"
+for browser in $browsers; do
+  for i in "${!browser_casks[@]}"; do
+    if [[ "${browser_casks[$i]}" == "$browser" ]]; then
+      app_path="/Applications/${browser_labels[$i]}.app"
+      log_section "Install ${browser_labels[$i]}"
+      if [ -d "$app_path" ]; then
+        log_skipped "${browser_labels[$i]}"
+      else
+        run brew install --cask "${browser_casks[$i]}"
+        log_installed "${browser_labels[$i]}"
+      fi
+    fi
+  done
 done

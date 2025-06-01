@@ -1,7 +1,5 @@
-log_section "Install Browsers"
-
-browser_labels=("Arc" "Brave Browser" "Google Chrome" "Microsoft Edge" "Opera" "Vivaldi" "Firefox")
-browser_casks=("arc" "brave-browser" "google-chrome" "microsoft-edge" "opera" "vivaldi" "firefox")
+browser_labels=("Arc" "Brave Browser" "Google Chrome" "Microsoft Edge" "Opera" "Vivaldi" "Firefox" "None")
+browser_casks=("arc" "brave-browser" "google-chrome" "microsoft-edge" "opera" "vivaldi" "firefox" "")
 
 selected=$(printf "%s\n" "${browser_labels[@]}" | gum choose --no-limit --header="Select browsers to install (Space to select, Enter to confirm):")
 
