@@ -1,11 +1,23 @@
-terminal_labels=("iTerm2" "WezTerm" "Warp" "Alacritty" "Kitty")
-terminal_dirs=("iterm2" "wezterm" "warp" "alacritty" "kitty")
+terminal_items=(
+  "iTerm2:iterm2"
+  "WezTerm:wezterm"
+  "Warp:warp"
+  "Alacritty:alacritty"
+  "Kitty:kitty"
+)
 
-terminal_choice=$(printf "%s\n" "${terminal_labels[@]}" | gum choose --limit=1 --header="Select a terminal emulator to install:")
+labels=()
+for item in "${terminal_items[@]}"; do
+  IFS=":" read -r label dir <<< "$item"
+  labels+=("$label")
+done
 
-for i in "${!terminal_labels[@]}"; do
-  if [[ "${terminal_labels[$i]}" == "$terminal_choice" ]]; then
-    dir="$YAMATO_PATH/terminal/${terminal_dirs[$i]}"
-    [ -f "$dir/install.sh" ] && source "$dir/install.sh"
+terminal_choice=$(printf "%s\n" "${labels[@]}" | gum choose --limit=1 --header="Select a terminal emulator to install:")
+
+for item in "${terminal_items[@]}"; do
+  IFS=":" read -r label dir <<< "$item"
+  if [[ "$label" == "$terminal_choice" ]]; then
+    script="$YAMATO_PATH/terminal/$dir/install.sh"
+    [ -f "$script" ] && source "$script"
   fi
 done

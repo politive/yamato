@@ -1,18 +1,29 @@
-browser_labels=("Arc" "Brave Browser" "Google Chrome" "Microsoft Edge" "Opera" "Vivaldi" "Firefox" "None")
-browser_casks=("arc" "brave-browser" "google-chrome" "microsoft-edge" "opera" "vivaldi" "firefox" "")
+browser_items=(
+  "Arc:arc"
+  "Brave Browser:brave-browser"
+  "Google Chrome:google-chrome"
+  "Microsoft Edge:microsoft-edge"
+  "Opera:opera"
+  "Vivaldi:vivaldi"
+  "Firefox:firefox"
+  "None:"
+)
 
-selected=$(printf "%s\n" "${browser_labels[@]}" | gum choose --no-limit --header="Select browsers to install (Space to select, Enter to confirm):")
+labels=()
+for item in "${browser_items[@]}"; do
+  IFS=":" read -r label cask <<< "$item"
+  labels+=("$label")
+done
+
+selected=$(printf "%s\n" "${labels[@]}" | gum choose --no-limit --header="Select browsers to install (Space to select, Enter to confirm):")
 
 IFS=$'\n'
 for label in $selected; do
-  for i in "${!browser_labels[@]}"; do
-    if [[ "${browser_labels[$i]}" == "$label" ]]; then
-      if [ -d "/Applications/${browser_labels[$i]}.app" ]; then
-        log_skipped "${browser_labels[$i]}"
-      else
-        run brew install --cask "${browser_casks[$i]}"
-        log_installed "${browser_labels[$i]}"
-      fi
+  for item in "${browser_items[@]}"; do
+    IFS=":" read -r l cask <<< "$item"
+    if [[ "$l" == "$label" && -n "$cask" ]]; then
+      app_name="$l.app"
+      brew_install_cask "$cask" "$app_name"
     fi
   done
 done

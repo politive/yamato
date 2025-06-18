@@ -1,14 +1,27 @@
-desktop_labels=("1Password" "Figma" "Slack" "Spotify" "Microsoft Teams" "Visual Studio Code")
-desktop_casks=("1password" "figma" "slack" "spotify" "microsoft-teams" "visual-studio-code")
+desktop_items=(
+  "1Password:1password"
+  "Figma:figma"
+  "Slack:slack"
+  "Spotify:spotify"
+  "Microsoft Teams:microsoft-teams"
+  "Visual Studio Code:visual-studio-code"
+)
 
-selected=$(printf "%s\n" "${desktop_labels[@]}" | gum choose --no-limit --header="Select desktop apps to install (Space to select, Enter to confirm):")
+labels=()
+for item in "${desktop_items[@]}"; do
+  IFS=":" read -r label cask <<< "$item"
+  labels+=("$label")
+done
+
+selected=$(printf "%s\n" "${labels[@]}" | gum choose --no-limit --header="Select desktop apps to install (Space to select, Enter to confirm):")
 
 IFS=$'\n'
 for label in $selected; do
-  for i in "${!desktop_labels[@]}"; do
-    if [[ "${desktop_labels[$i]}" == "$label" ]]; then
-      app_name="${desktop_labels[$i]}.app"
-      brew_install_cask "${desktop_casks[$i]}" "$app_name"
+  for item in "${desktop_items[@]}"; do
+    IFS=":" read -r l cask <<< "$item"
+    if [[ "$l" == "$label" ]]; then
+      app_name="$l.app"
+      brew_install_cask "$cask" "$app_name"
     fi
   done
 done

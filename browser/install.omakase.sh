@@ -1,19 +1,7 @@
-browser_labels=("Arc" "Brave Browser" "Google Chrome" "Microsoft Edge" "Opera" "Vivaldi" "Firefox" "None")
-browser_casks=("arc" "brave-browser" "google-chrome" "microsoft-edge" "opera" "vivaldi" "firefox" "")
-
-browsers=$(yq '.browser[]' "$PRESET_FILE")
-
-for browser in $browsers; do
-  for i in "${!browser_casks[@]}"; do
-    if [[ "${browser_casks[$i]}" == "$browser" ]]; then
-      app_path="/Applications/${browser_labels[$i]}.app"
-      log_section "Install ${browser_labels[$i]}"
-      if [ -d "$app_path" ]; then
-        log_skipped "${browser_labels[$i]}"
-      else
-        run brew install --cask "${browser_casks[$i]}"
-        log_installed "${browser_labels[$i]}"
-      fi
-    fi
-  done
+for i in $(seq 0 $(($(yq '.browser.brew_cask | length' "$PRESET_FILE") - 1))); do
+  cask=$(yq ".browser.brew_cask[$i].cask" "$PRESET_FILE")
+  app=$(yq ".browser.brew_cask[$i].app" "$PRESET_FILE")
+  [ -z "$cask" ] && continue
+  [ -z "$app" ] && continue
+  brew_install_cask "$cask" "$app"
 done

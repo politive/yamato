@@ -1,4 +1,4 @@
-PRESET_FILE="${PRESET_FILE:-$YAMATO_PATH/yamato.yml}"
+PRESET_FILE="${PRESET_FILE:-$YAMATO_PATH/yamato.yaml}"
 
 terminal_emulator=$(yq '.terminal.emulator' "$PRESET_FILE")
 
