@@ -29,33 +29,45 @@ terminal:
   emulator: wezterm
 
 browser:
-  # Specify the browser to use.
-  - arc
-  # - brave-browser
-  # - firefox
-  - google-chrome
-  # - microsoft-edge
-  # - opera
-  # - vivaldi
+  brew_cask:
+    - arc
+    # - brave-browser
+    # - firefox
+    - google-chrome
+    # - microsoft-edge
+    # - opera
+    # - vivaldi
 
 desktop:
   brew_cask:
-    # Google Chrome
-    - cask: google-chrome
-      app: Google Chrome.app
+    # 1Password
+    - cask: 1password
+      app: 1Password.app
 
-    # Slack
-    - cask: slack
-      app: Slack.app
+    # discord
+    - cask: discord
+      app: Discord.app
 
     # Figma
     - cask: figma
       app: Figma.app
 
-    # Spotify
-    - cask: spotify
-      app: Spotify.app
-
     # Microsoft Teams
     - cask: microsoft-teams
       app: Microsoft Teams.app
+
+    # OpenVPN Connect
+    - cask: openvpn-connect
+      app: OpenVPN Connect.app
+
+    # Signal
+    - cask: signal
+      app: Signal.app
+
+    # Slack
+    - cask: slack
+      app: Slack.app
+
+    # Spotify
+    - cask: spotify
+      app: Spotify.app

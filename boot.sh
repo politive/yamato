@@ -21,6 +21,13 @@ source "$YAMATO_PATH/lib/log.sh"
 log_section "Loading library: args"
 source "$YAMATO_PATH/lib/args.sh" "$@"
 
+log_section "Loading library: merge_yaml"
+source "$YAMATO_PATH/lib/merge_yaml.sh"
+
+mkdir -p "$YAMATO_PATH/.cache"
+merge_yaml "$YAMATO_PATH/yamato.yaml" "$YAMATO_PATH/yamato.overrides.yaml" "$YAMATO_PATH/.cache/yamato.yaml"
+PRESET_FILE="$YAMATO_PATH/.cache/yamato.yaml"
+
 log_section "Loading library: run"
 source "$YAMATO_PATH/lib/run.sh"
 

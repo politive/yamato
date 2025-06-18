@@ -48,5 +48,5 @@ while [ $# -gt 0 ]; do
 done
 
 if [ -z "$PRESET_FILE" ]; then
-  PRESET_FILE="$YAMATO_PATH/yamato.yml"
+  PRESET_FILE="$YAMATO_PATH/yamato.yaml"
 fi
