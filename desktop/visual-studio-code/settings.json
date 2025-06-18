@@ -4,5 +4,14 @@
     "editor.formatOnSave": true,
     "editor.formatOnPaste": true,
     "editor.defaultFormatter": "yzhang.markdown-all-in-one"
-  }
+  },
+  "github.copilot.chat.localeOverride": "ja",
+  "workbench.settings.applyToAllProfiles": [
+    "github.copilot.chat.localeOverride"
+  ],
+  "github.copilot.advanced": {},
+  "github.copilot.enable": {
+    "*": false
+  },
+  "editor.fontFamily": "HackGen Console NF"
 }

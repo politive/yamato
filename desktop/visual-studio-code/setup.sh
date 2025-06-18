@@ -1,5 +1,13 @@
-log_section "Install Visual Studio Code Extensions"
+if ! command -v code >/dev/null 2>&1; then
+  return 0
+fi
 
+log_section "Symlink Visual Studio Code Settings"
+TARGET="$HOME/Library/Application Support/Code/User/settings.json"
+SOURCE="$YAMATO_PATH/desktop/visual-studio-code/settings.json"
+create_symlink "$SOURCE" "$TARGET"
+
+log_section "Install Visual Studio Code Extensions"
 EXT_FILE="$YAMATO_PATH/desktop/visual-studio-code/extensions.txt"
 installed=$(code --list-extensions)
 

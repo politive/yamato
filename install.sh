@@ -14,7 +14,9 @@ source "$YAMATO_PATH/bootstrap/install.sh"
 for dir in $YAMATO_PATH/cli/*; do [ -f "$dir/install.sh" ] && source "$dir/install.sh"; done
 
 # Install Desktop App
-for dir in $YAMATO_PATH/desktop/*; do [ -f "$dir/install.sh" ] && source "$dir/install.sh"; done
+if [ -f "$YAMATO_PATH/desktop/install.$MODE.sh" ]; then
+  source "$YAMATO_PATH/desktop/install.$MODE.sh"
+fi
 
 # Install Docker
 if [ -f "$YAMATO_PATH/docker/install.$MODE.sh" ]; then
