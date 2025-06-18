@@ -24,6 +24,9 @@ source "$YAMATO_PATH/lib/args.sh" "$@"
 log_section "Loading library: run"
 source "$YAMATO_PATH/lib/run.sh"
 
+log_section "Loading library: brew"
+source "$YAMATO_PATH/lib/brew.sh"
+
 log_section "Installation starting..."
 source $YAMATO_PATH/install.sh
 

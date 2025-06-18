@@ -8,7 +8,7 @@ source $YAMATO_PATH/homebrew/install.sh
 for f in $YAMATO_PATH/settings/*.sh; do source "$f"; done
 
 # Install Bootstrap tools
-for dir in $YAMATO_PATH/bootstrap/*; do [ -f "$dir/install.sh" ] && source "$dir/install.sh"; done
+source "$YAMATO_PATH/bootstrap/install.sh"
 
 # Install Terminal tools
 for dir in $YAMATO_PATH/cli/*; do [ -f "$dir/install.sh" ] && source "$dir/install.sh"; done
