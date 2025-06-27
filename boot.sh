@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/zsh
 set -euo pipefail
 
 ascii_art='
@@ -7,7 +7,7 @@ ascii_art='
  \     /  |       | |       | |       |   |   |   |   -   |
   |___|   |___|___| |__|_|__| |___|___|   |___|   |_______|
 '
-echo -e "$ascii_art"
+echo "$ascii_art"
 
 if [ -d "$HOME/.local/share/yamato/.git" ]; then
   git -C "$HOME/.local/share/yamato" pull --ff-only >/dev/null 2>&1
@@ -38,7 +38,7 @@ log_section "Loading library: brew"
 source "$YAMATO_PATH/lib/brew.sh"
 
 log_section "Installation starting..."
-source $YAMATO_PATH/install.sh
+source "$YAMATO_PATH/install.sh"
 
 echo ""
 echo "========================================================"
