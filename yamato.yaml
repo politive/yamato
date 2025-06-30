@@ -1,73 +1,15 @@
-docker:
-  # Use all_in_one for all-in-one solutions.
-  # Uncomment one of the following blocks to use an all-in-one Docker solution.
+tools:
+  - name: Git
+    command: git
+    check:
+      type: path
+      value: /opt/homebrew/bin/git
 
-  # all_in_one:
-  #   cask: docker-desktop
-  #   app: Docker.app
-
-  # all_in_one:
-  #   cask: rancher
-  #   app: Rancher.app
-
-  # all_in_one:
-  #   cask: podman-desktop
-  #   app: Podman Desktop.app
-
-  # For custom setup, comment out the all_in_one line above and specify cli, daemon, and tui below.
-  cli:
-    - docker
-    - docker-compose
-  daemon:
-    - colima
-  tui:
-    - lazydocker
-
-terminal:
-  # Specify the terminal emulator to use.
-  # Options include: alacritty, iterm2, kitty, warp, wezterm
-  emulator: wezterm
-
-browser:
-  brew_cask:
-    - arc
-    # - brave-browser
-    # - firefox
-    - google-chrome
-    # - microsoft-edge
-    # - opera
-    # - vivaldi
-
-desktop:
-  brew_cask:
-    # 1Password
-    - cask: 1password
-      app: 1Password.app
-
-    # discord
-    - cask: discord
-      app: Discord.app
-
-    # Figma
-    - cask: figma
-      app: Figma.app
-
-    # Microsoft Teams
-    - cask: microsoft-teams
-      app: Microsoft Teams.app
-
-    # OpenVPN Connect
-    - cask: openvpn-connect
-      app: OpenVPN Connect.app
-
-    # Signal
-    - cask: signal
-      app: Signal.app
-
-    # Slack
-    - cask: slack
-      app: Slack.app
-
-    # Spotify
-    - cask: spotify
-      app: Spotify.app
+  - name: starship
+    command: starship
+    check:
+      type: command
+      value: starship
+    symlinks:
+      - source: "$YAMATO_PATH/cli/starship/starship.toml"
+        target: "$HOME/.config/starship.toml"

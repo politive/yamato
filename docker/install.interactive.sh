@@ -8,13 +8,13 @@ docker_choice=$(printf "%s\n" "${docker_options[@]}" | gum choose --limit=1 --he
 
 case "$docker_choice" in
   "Docker Desktop (All-in-one)")
-    brew_install_cask docker "Docker.app"
+    brew_install_path docker "/Applications/Docker.app" "true" "Docker.app"
     ;;
   "Rancher Desktop (All-in-one)")
-    brew_install_cask rancher "Rancher.app"
+    brew_install_path rancher "/Applications/Rancher.app" "true" "Rancher.app"
     ;;
   "Podman Desktop (All-in-one)")
-    brew_install_cask podman-desktop "Podman Desktop.app"
+    brew_install_path podman-desktop "/Applications/Podman Desktop.app" "true" "Podman Desktop.app"
     ;;
   "Custom (Choose components individually)")
     # CLI

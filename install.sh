@@ -8,57 +8,58 @@ source $YAMATO_PATH/homebrew/install.sh
 for f in $YAMATO_PATH/settings/*.sh; do source "$f"; done
 
 # Install Bootstrap tools
-source "$YAMATO_PATH/bootstrap/install.sh"
+source "$YAMATO_PATH/bootstrap/install.$MODE.sh"
 
-# Install Terminal tools
-for dir in $YAMATO_PATH/cli/*; do [ -f "$dir/install.sh" ] && source "$dir/install.sh"; done
-
-# Install Desktop App
-if [ -f "$YAMATO_PATH/desktop/install.$MODE.sh" ]; then
-  source "$YAMATO_PATH/desktop/install.$MODE.sh"
+if [[ "$MODE" == "interactive" ]]; then
+  # Install Desktop App, Docker, Terminal, Browser
+  for category in desktop docker terminal browser; do
+    script="$YAMATO_PATH/$category/install.interactive.sh"
+    if [ -f "$script" ]; then
+      source "$script"
+    fi
+  done
 fi
 
-# Install Docker
-if [ -f "$YAMATO_PATH/docker/install.$MODE.sh" ]; then
-  source "$YAMATO_PATH/docker/install.$MODE.sh"
-fi
+tool_names=()
+tool_cmds=()
+tool_check_types=()
+tool_check_values=()
+tool_symlinks=()
 
-# Install Terminal
-if [ -f "$YAMATO_PATH/terminal/install.$MODE.sh" ]; then
-  source "$YAMATO_PATH/terminal/install.$MODE.sh"
-fi
+while IFS= read -r line; do tool_names+=("$line"); done < <(yq '.tools[].name' "$PRESET_FILE")
+while IFS= read -r line; do tool_cmds+=("$line"); done < <(yq '.tools[].command' "$PRESET_FILE")
+while IFS= read -r line; do tool_check_types+=("$line"); done < <(yq '.tools[].check.type' "$PRESET_FILE")
+while IFS= read -r line; do tool_check_values+=("$line"); done < <(yq '.tools[].check.value' "$PRESET_FILE")
 
-# Install Browser
-if [ -f "$YAMATO_PATH/browser/install.$MODE.sh" ]; then
-  source "$YAMATO_PATH/browser/install.$MODE.sh"
-fi
+tool_count=${#tool_names[@]}
 
+for ((i=0; i<tool_count; i++)); do
+  name="${tool_names[$i]}"
+  cmd="${tool_cmds[$i]}"
+  check_type="${tool_check_types[$i]}"
+  check_value="${tool_check_values[$i]}"
 
-# Create Symlink
-log_section "Create Symlinks"
-for f in "$YAMATO_PATH"/dotfiles/.*; do
-  base="$(basename "$f")"
-
-  case "$base" in
-    .|..|.DS_Store) continue ;;
+  case "$check_type" in
+    command)
+      brew_install_command "$cmd" "$check_value"
+      ;;
+    path)
+      brew_install_path "$cmd" "$check_value"
+      ;;
+    *)
+      log_failure "Unknown check type: $check_type for $name"
+      ;;
   esac
 
-  [ -f "$f" ] || continue
-
-  target="$HOME/$base"
-
-  if [ -L "$target" ]; then
-    if [ "$(readlink "$target")" = "$f" ]; then
-      log_synlink_skipped "$base"
-    else
-      rm -f "$target"
-      run ln -s "$f" "$target"
-      log_synlink_replaced "$base"
-    fi
-  elif [ -e "$target" ]; then
-    log_skipped "$base"
-  else
-    run ln -s "$f" "$target"
-    log_symlink "$base"
+  # symlinks
+  symlink_count=$(yq ".tools[$i].symlinks | length" "$PRESET_FILE" 2>/dev/null || echo 0)
+  if [ "$symlink_count" -gt 0 ]; then
+    for ((j=0; j<symlink_count; j++)); do
+      src_rel=$(yq ".tools[$i].symlinks[$j].source" "$PRESET_FILE")
+      tgt_rel=$(yq ".tools[$i].symlinks[$j].target" "$PRESET_FILE")
+      src=$(expand_path "$src_rel")
+      tgt=$(expand_path "$tgt_rel")
+      create_symlink "$src" "$tgt"
+    done
   fi
 done

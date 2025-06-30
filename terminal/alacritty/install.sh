@@ -1,30 +1,8 @@
 log_section "Install Alacritty"
 
-if command -v alacritty >/dev/null 2>&1; then
-  log_skipped "Alacritty"
-else
-  run brew install --cask alacritty
-  log_installed "Alacritty"
-fi
+brew_install_path "alacritty" "/Applications/Alacritty.app" "true" "Alacritty.app"
 
-
-TARGET="$HOME/.config/alacritty/alacritty.toml"
 SOURCE="$YAMATO_PATH/terminal/alacritty/alacritty.toml"
+TARGET="$HOME/.config/alacritty/alacritty.toml"
 
-mkdir -p "$(dirname "$TARGET")"
-
-if [ -f "$SOURCE" ]; then
-  if [ -L "$TARGET" ]; then
-    if [ "$(readlink "$TARGET")" = "$SOURCE" ]; then
-      log_synlink_skipped "$(basename "$TARGET")"
-    else
-      run ln -sf "$SOURCE" "$TARGET"
-      log_synlink_replaced "$(basename "$TARGET")"
-    fi
-  elif [ -e "$TARGET" ]; then
-    log_skipped "$(basename "$TARGET")"
-  else
-    run ln -s "$SOURCE" "$TARGET"
-    log_symlink "$(basename "$TARGET")"
-  fi
-fi
+create_symlink "$SOURCE" "$TARGET"

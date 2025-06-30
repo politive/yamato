@@ -1,4 +1,4 @@
-#!/bin/zsh
+#!/bin/bash
 set -euo pipefail
 
 ascii_art='
@@ -9,11 +9,11 @@ ascii_art='
 '
 echo "$ascii_art"
 
-if [ -d "$HOME/.local/share/yamato/.git" ]; then
-  git -C "$HOME/.local/share/yamato" pull --ff-only >/dev/null 2>&1
-else
-  git clone https://github.com/politive/yamato.git "$HOME/.local/share/yamato" >/dev/null 2>&1
-fi
+# if [ -d "$HOME/.local/share/yamato/.git" ]; then
+#   git -C "$HOME/.local/share/yamato" pull --ff-only >/dev/null 2>&1
+# else
+#   git clone https://github.com/politive/yamato.git "$HOME/.local/share/yamato" >/dev/null 2>&1
+# fi
 
 YAMATO_PATH="$HOME/.local/share/yamato"
 source "$YAMATO_PATH/lib/log.sh"

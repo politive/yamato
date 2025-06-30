@@ -20,8 +20,7 @@ for label in $selected; do
   for item in "${desktop_items[@]}"; do
     IFS=":" read -r l cask <<< "$item"
     if [[ "$l" == "$label" ]]; then
-      app_name="$l.app"
-      brew_install_cask "$cask" "$app_name"
+      brew_install_path "$cask" "/Applications/$app" "true" "$app"
     fi
   done
 done

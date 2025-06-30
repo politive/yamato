@@ -22,8 +22,7 @@ for label in $selected; do
   for item in "${browser_items[@]}"; do
     IFS=":" read -r l cask <<< "$item"
     if [[ "$l" == "$label" && -n "$cask" ]]; then
-      app_name="$l.app"
-      brew_install_cask "$cask" "$app_name"
+      brew_install_path "$cask" "/Applications/$app" "true" "$app"
     fi
   done
 done
