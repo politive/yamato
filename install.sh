@@ -3,6 +3,7 @@ source $YAMATO_PATH/check-version.sh
 
 # Install Homebrew
 source $YAMATO_PATH/homebrew/install.sh
+brew_install_command "yq" "yq"
 
 # Apply MacOS Settings
 default_domains=()
@@ -44,19 +45,7 @@ for ((i=0; i<default_count; i++)); do
   fi
 done
 
-# Install Bootstrap tools
-source "$YAMATO_PATH/bootstrap/install.$MODE.sh"
-
-if [[ "$MODE" == "interactive" ]]; then
-  # Install Desktop App, Docker, Terminal, Browser
-  for category in desktop docker terminal browser; do
-    script="$YAMATO_PATH/$category/install.interactive.sh"
-    if [ -f "$script" ]; then
-      source "$script"
-    fi
-  done
-fi
-
+#
 tool_names=()
 tool_cmds=()
 tool_check_types=()
