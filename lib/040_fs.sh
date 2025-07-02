@@ -21,5 +21,6 @@ expand_path() {
   local path="$1"
   path="${path//\$HOME/$HOME}"
   path="${path//\$YAMATO_PATH/$YAMATO_PATH}"
+  path="${path//\$OVERRIDES_PATH/$OVERRIDES_PATH}"
   echo "$path"
 }
