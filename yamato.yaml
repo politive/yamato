@@ -38,3 +38,8 @@ tools:
     symlinks:
       - source: "$YAMATO_PATH/cli/starship/starship.toml"
         target: "$HOME/.config/starship.toml"
+
+symlinks:
+  # zshrc
+  - source: "$YAMATO_D_PATH/dotfiles/.zshrc"
+    target: "$HOME/.zshrc"

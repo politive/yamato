@@ -16,14 +16,24 @@ else
 fi
 
 YAMATO_PATH="$HOME/.local/share/yamato"
+OVERRIDES_PATH="$YAMATO_PATH/overrides"
+
+YAMATO_D_PATH="$YAMATO_PATH/yamato.d"
+OVERRIDES_D_PATH="$OVERRIDES_PATH/yamato.d"
 
 for libfile in "$YAMATO_PATH/lib/"*.sh; do
   [ -f "$libfile" ] && source "$libfile"
 done
 
-mkdir -p "$YAMATO_PATH/.cache"
-merge_yaml "$YAMATO_PATH/yamato.yaml" "$YAMATO_PATH/yamato.overrides.yaml" "$YAMATO_PATH/.cache/yamato.yaml"
-PRESET_FILE="$YAMATO_PATH/.cache/yamato.yaml"
+CACHE_PATH="$YAMATO_PATH/.cache"
+mkdir -p "$CACHE_PATH"
+MERGED_YAML="$CACHE_PATH/yamato.yaml"
+
+if [ -f "$YAMATO_PATH/yamato.overrides.yaml" ]; then
+  merge_yaml "$YAMATO_PATH/yamato.yaml" "$YAMATO_PATH/yamato.overrides.yaml" "$MERGED_YAML"
+else
+  cp "$YAMATO_PATH/yamato.yaml" "$MERGED_YAML"
+fi
 
 log_section "Installation starting..."
 source "$YAMATO_PATH/install.sh"

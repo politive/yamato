@@ -22,5 +22,7 @@ expand_path() {
   path="${path//\$HOME/$HOME}"
   path="${path//\$YAMATO_PATH/$YAMATO_PATH}"
   path="${path//\$OVERRIDES_PATH/$OVERRIDES_PATH}"
+  path="${path//\$YAMATO_D_PATH/$YAMATO_D_PATH}"
+  path="${path//\$OVERRIDES_D_PATH/$OVERRIDES_D_PATH}"
   echo "$path"
 }

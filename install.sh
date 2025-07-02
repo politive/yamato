@@ -89,3 +89,15 @@ for ((i=0; i<tool_count; i++)); do
     done
   fi
 done
+
+log_section "Create symlinks"
+symlink_count=$(yq '.symlinks | length' "$PRESET_FILE" 2>/dev/null || echo 0)
+if [ "$symlink_count" -gt 0 ]; then
+  for ((i=0; i<symlink_count; i++)); do
+    src_rel=$(yq ".symlinks[$i].source" "$PRESET_FILE")
+    tgt_rel=$(yq ".symlinks[$i].target" "$PRESET_FILE")
+    src=$(expand_path "$src_rel")
+    tgt=$(expand_path "$tgt_rel")
+    create_symlink "$src" "$tgt"
+  done
+fi
