@@ -5,7 +5,44 @@ source $YAMATO_PATH/check-version.sh
 source $YAMATO_PATH/homebrew/install.sh
 
 # Apply MacOS Settings
-for f in $YAMATO_PATH/settings/*.sh; do source "$f"; done
+default_domains=()
+default_keys=()
+default_types=()
+default_values=()
+default_comments=()
+
+while IFS= read -r line; do default_domains+=("$line"); done < <(yq '.defaults[].domain' "$PRESET_FILE")
+while IFS= read -r line; do default_keys+=("$line"); done < <(yq '.defaults[].key' "$PRESET_FILE")
+while IFS= read -r line; do default_types+=("$line"); done < <(yq '.defaults[].type' "$PRESET_FILE")
+while IFS= read -r line; do default_values+=("$line"); done < <(yq '.defaults[].value | @json' "$PRESET_FILE")
+while IFS= read -r line; do default_comments+=("$line"); done < <(yq '.defaults[].comment' "$PRESET_FILE")
+
+default_count=${#default_domains[@]}
+
+for ((i=0; i<default_count; i++)); do
+  domain="${default_domains[$i]}"
+  key="${default_keys[$i]}"
+  type="${default_types[$i]}"
+  value="${default_values[$i]}"
+  comment="${default_comments[$i]}"
+
+  if [ "$type" = "array" ]; then
+    if [ "$value" = "[]" ]; then
+      run defaults write "$domain" "$key" -array
+    else
+      arr=($(echo "$value" | jq -r '.[]'))
+      run defaults write "$domain" "$key" -array "${arr[@]}"
+    fi
+  else
+    run defaults write "$domain" "$key" "-$type" "$value"
+  fi
+
+  if [ -n "$comment" ]; then
+    log_applied "$comment"
+  else
+    log_applied "$domain $key"
+  fi
+done
 
 # Install Bootstrap tools
 source "$YAMATO_PATH/bootstrap/install.$MODE.sh"

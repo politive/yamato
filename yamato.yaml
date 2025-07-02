@@ -1,3 +1,28 @@
+defaults:
+  - domain: com.apple.dock
+    key: autohide
+    type: bool
+    value: true
+    comment: "Enabling auto-hide"
+
+  - domain: com.apple.dock
+    key: persistent-apps
+    type: array
+    value: []
+    comment: "Removing pinned apps"
+
+  - domain: com.apple.dock
+    key: orientation
+    type: string
+    value: left
+    comment: "Moving Dock to left side"
+
+  - domain: com.apple.dock
+    key: tilesize
+    type: int
+    value: 28
+    comment: "Icon Size: 28px"
+
 tools:
   - name: Git
     command: git
