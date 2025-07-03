@@ -9,21 +9,27 @@ ascii_art='
 '
 echo "$ascii_art"
 
-if [ -d "$HOME/.local/share/yamato/.git" ]; then
-  git -C "$HOME/.local/share/yamato" pull --ff-only >/dev/null 2>&1
-else
-  git clone https://github.com/politive/yamato.git "$HOME/.local/share/yamato" >/dev/null 2>&1
-fi
-
 YAMATO_PATH="$HOME/.local/share/yamato"
 OVERRIDES_PATH="$YAMATO_PATH/overrides"
-
 YAMATO_D_PATH="$YAMATO_PATH/yamato.d"
 OVERRIDES_D_PATH="$OVERRIDES_PATH/yamato.d"
 
 for libfile in "$YAMATO_PATH/lib/"*.sh; do
   [ -f "$libfile" ] && source "$libfile"
 done
+
+log_section "Fetch or Clone Source Code"
+if [ -d "$HOME/.local/share/yamato/.git" ]; then
+  if [ "$SKIP_PULL" -eq 0 ]; then
+    git -C "$HOME/.local/share/yamato" pull --ff-only >/dev/null 2>&1
+    log_applied "yamato"
+  else
+    log_skipped "git pull"
+  fi
+else
+  git clone https://github.com/politive/yamato.git "$HOME/.local/share/yamato" >/dev/null 2>&1
+  log_installed "yamato"
+fi
 
 CACHE_PATH="$YAMATO_PATH/.cache"
 mkdir -p "$CACHE_PATH"

@@ -1,5 +1,6 @@
 VERBOSE=0
 DRYRUN=0
+SKIP_PULL=0
 
 while [ $# -gt 0 ]; do
   arg="$1"
@@ -10,6 +11,10 @@ while [ $# -gt 0 ]; do
       ;;
     --dryrun|--dry-run)
       DRYRUN=1
+      shift
+      ;;
+    --skip-pull)
+      SKIP_PULL=1
       shift
       ;;
     --help|-h)
