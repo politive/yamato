@@ -36,10 +36,47 @@ tools:
       type: command
       value: starship
     symlinks:
-      - source: "$YAMATO_PATH/cli/starship/starship.toml"
-        target: "$HOME/.config/starship.toml"
+      - source: $YAMATO_D_PATH/tools/starship/starship.toml
+        target: $HOME/.config/starship.toml
+
+  # postgresql client library
+  - name: libpq
+    command: libpq
+    check:
+      type: command
+      value: pg_config
+
+  - name: libyaml
+    command: libyaml
+    check:
+      type: path
+      value: /opt/homebrew/include/yaml.h
+
+  - name: mise
+    command: mise
+    check:
+      type: command
+      value: mise
+
+  - name: Visual Studio Code
+    command: visual-studio-code
+    cask: true
+    check:
+      type: command
+      value: code
+    symlinks:
+      - source: $YAMATO_D_PATH/tools/vscode/settings.json
+        target: $HOME/Library/Application Support/Code/User/settings.json
 
 symlinks:
-  # zshrc
   - source: "$YAMATO_D_PATH/dotfiles/.zshrc"
     target: "$HOME/.zshrc"
+
+  - source: "$YAMATO_D_PATH/dotfiles/.zshenv"
+    target: "$HOME/.zshenv"
+
+  - source: "$YAMATO_D_PATH/dotfiles/.zprofile"
+    target: "$HOME/.zprofile"
+
+  - source: "$YAMATO_D_PATH/dotfiles/.editorconfig"
+    target: "$HOME/.editorconfig"
