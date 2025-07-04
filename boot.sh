@@ -33,12 +33,12 @@ fi
 
 CACHE_PATH="$YAMATO_PATH/.cache"
 mkdir -p "$CACHE_PATH"
-MERGED_YAML="$CACHE_PATH/yamato.yaml"
+PRESET_FILE="$CACHE_PATH/yamato.yaml"
 
-if [ -f "$YAMATO_PATH/yamato.overrides.yaml" ]; then
-  merge_yaml "$YAMATO_PATH/yamato.yaml" "$YAMATO_PATH/yamato.overrides.yaml" "$MERGED_YAML"
+if [ -f "$YAMATO_PATH/user/yamato.yaml" ]; then
+  cp "$YAMATO_PATH/user/yamato.yaml" "$CACHE_PATH/yamato.yaml"
 else
-  cp "$YAMATO_PATH/yamato.yaml" "$MERGED_YAML"
+  cp "$YAMATO_PATH/yamato.yaml" "$CACHE_PATH/yamato.yaml"
 fi
 
 log_section "Installation starting..."

@@ -27,5 +27,3 @@ while [ $# -gt 0 ]; do
       ;;
   esac
 done
-
-PRESET_FILE="$YAMATO_PATH/yamato.yaml"
