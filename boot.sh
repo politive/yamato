@@ -10,9 +10,9 @@ ascii_art='
 echo "$ascii_art"
 
 YAMATO_PATH="$HOME/.local/share/yamato"
-OVERRIDES_PATH="$YAMATO_PATH/overrides"
+USER_PATH="$YAMATO_PATH/user"
 YAMATO_D_PATH="$YAMATO_PATH/yamato.d"
-OVERRIDES_D_PATH="$OVERRIDES_PATH/yamato.d"
+USER_D_PATH="$USER_PATH/yamato.d"
 
 for libfile in "$YAMATO_PATH/lib/"*.sh; do
   [ -f "$libfile" ] && source "$libfile"

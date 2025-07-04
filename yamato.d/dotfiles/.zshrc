@@ -10,7 +10,7 @@ setopt share_history inc_append_history append_history
 
 # export
 YAMATO_PATH="$HOME/.local/share/yamato"
-OVERRIDES_PATH="$YAMATO_PATH/overrides"
+USER_PATH="$YAMATO_PATH/user"
 YAMATO_D_PATH="$YAMATO_PATH/yamato.d"
-OVERRIDES_D_PATH="$OVERRIDES_PATH/yamato.d"
+USER_D_PATH="$USER_PATH/yamato.d"
 for file in $YAMATO_D_PATH/tools/*/export.zsh; do [[ -f "$file" ]] && source "$file"; done
