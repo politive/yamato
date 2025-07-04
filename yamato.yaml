@@ -24,6 +24,21 @@ defaults:
     comment: "Icon Size: 28px"
 
 tools:
+  - name: docker
+    command: docker
+    check:
+      type: command
+      value: docker
+
+  - name: docker-compose
+    command: docker-compose
+    check:
+      type: command
+      value: docker-compose
+    symlinks:
+      - source: "$YAMATO_D_PATH/dotfiles/.docker/config.json"
+        target: "$HOME/.docker/config.json"
+
   - name: Git
     command: git
     check:
@@ -58,6 +73,34 @@ tools:
       type: command
       value: mise
 
+  - name: zsh
+    command: zsh
+    check:
+      type: path
+      value: /opt/homebrew/bin/zsh
+    symlinks:
+      - source: "$YAMATO_D_PATH/dotfiles/.zshrc"
+        target: "$HOME/.zshrc"
+
+  - name: zsh-completions
+    command: zsh-completions
+    check:
+      type: command
+      value: zsh
+
+  - name: zsh-autosuggestions
+    command: zsh-autosuggestions
+    check:
+      type: command
+      value: zsh-autosuggestions
+
+  - name: zsh-syntax-highlighting
+    command: zsh-syntax-highlighting
+    check:
+      type: command
+      value: zsh-syntax-highlighting
+
+  # VSCode
   - name: Visual Studio Code
     command: visual-studio-code
     cask: true
