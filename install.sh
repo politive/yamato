@@ -1,5 +1,3 @@
-# Check the distribution name and version and abort if incompatible
-source $YAMATO_PATH/check-version.sh
 PRESET_FILE="$YAMATO_PATH/yamato.yaml"
 
 
@@ -96,15 +94,21 @@ for ((i=0; i<tool_count; i++)); do
     brew_install "$cmd" "$check_type" "$check_value" "$i"
   fi
 
-  # symlinks
-  symlink_count=$(yq ".tools[$i].symlinks | length" "$PRESET_FILE" 2>/dev/null || echo 0)
-  if [ "$symlink_count" -gt 0 ]; then
-    for ((j=0; j<symlink_count; j++)); do
-      src_rel=$(yq ".tools[$i].symlinks[$j].source" "$PRESET_FILE")
-      tgt_rel=$(yq ".tools[$i].symlinks[$j].target" "$PRESET_FILE")
-      src=$(expand_path "$src_rel")
-      tgt=$(expand_path "$tgt_rel")
-      create_symlink "$src" "$tgt"
+  # symlinks from dotfiles/<tool_name>/
+  dotfiles_dir="$YAMATO_D_PATH/dotfiles/$name"
+  if [ -d "$dotfiles_dir" ]; then
+    find "$dotfiles_dir" -type f | while read -r src_file; do
+      # Get relative path from dotfiles/<tool_name>/
+      rel_path="${src_file#$dotfiles_dir/}"
+      tgt_file="$HOME/$rel_path"
+
+      # Create target directory if needed
+      tgt_dir=$(dirname "$tgt_file")
+      if [ ! -d "$tgt_dir" ]; then
+        mkdir -p "$tgt_dir"
+      fi
+
+      create_symlink "$src_file" "$tgt_file"
     done
   fi
 
