@@ -58,22 +58,27 @@ done
 
 tool_names=()
 tool_cmds=()
-tool_check_types=()
-tool_check_values=()
-tool_symlinks=()
 
 while IFS= read -r line; do tool_names+=("$line"); done < <(yq '.tools[].name' "$PRESET_FILE")
 while IFS= read -r line; do tool_cmds+=("$line"); done < <(yq '.tools[].command' "$PRESET_FILE")
-while IFS= read -r line; do tool_check_types+=("$line"); done < <(yq '.tools[].check.type' "$PRESET_FILE")
-while IFS= read -r line; do tool_check_values+=("$line"); done < <(yq '.tools[].check.value' "$PRESET_FILE")
 
 tool_count=${#tool_names[@]}
 
 for ((i=0; i<tool_count; i++)); do
   name="${tool_names[$i]}"
   cmd="${tool_cmds[$i]}"
-  check_type="${tool_check_types[$i]}"
-  check_value="${tool_check_values[$i]}"
+
+  # Get check type with default value
+  check_type=$(yq ".tools[$i].check.type" "$PRESET_FILE" 2>/dev/null)
+  if [ "$check_type" = "null" ] || [ -z "$check_type" ]; then
+    check_type="command"
+  fi
+
+  # Get check value with default value (use name if not specified)
+  check_value=$(yq ".tools[$i].check.value" "$PRESET_FILE" 2>/dev/null)
+  if [ "$check_value" = "null" ] || [ -z "$check_value" ]; then
+    check_value="$name"
+  fi
 
   case "$check_type" in
     command)

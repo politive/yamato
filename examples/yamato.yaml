@@ -26,15 +26,9 @@ defaults:
 tools:
   - name: docker
     command: docker
-    check:
-      type: command
-      value: docker
 
   - name: docker-compose
     command: docker-compose
-    check:
-      type: command
-      value: docker-compose
     copies:
       - source: "$YAMATO_D_PATH/dotfiles/.docker/config.json"
         target: "$HOME/.docker/config.json"
@@ -48,27 +42,18 @@ tools:
 
   - name: wezterm
     command: wezterm
-    check:
-      type: command
-      value: wezterm
     symlinks:
       - source: $YAMATO_D_PATH/tools/wezterm/wezterm.lua
         target: $HOME/.config/wezterm/wezterm.lua
 
   - name: starship
     command: starship
-    check:
-      type: command
-      value: starship
     symlinks:
       - source: $YAMATO_D_PATH/tools/starship/starship.toml
         target: $HOME/.config/starship.toml
 
   - name: eza
     command: eza
-    check:
-      type: command
-      value: eza
 
   # postgresql client library
   - name: libpq
@@ -85,9 +70,6 @@ tools:
 
   - name: mise
     command: mise
-    check:
-      type: command
-      value: mise
 
   - name: zsh
     command: zsh
