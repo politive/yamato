@@ -6,6 +6,7 @@ source $YAMATO_PATH/homebrew/install.sh
 brew_install_command "yq" "yq"
 
 # Apply MacOS Settings
+log_section "MacOS Settings"
 default_domains=()
 default_keys=()
 default_types=()
@@ -88,6 +89,35 @@ for ((i=0; i<tool_count; i++)); do
       create_symlink "$src" "$tgt"
     done
   fi
+
+  # copy files
+  copy_count=$(yq ".tools[$i].copies | length" "$PRESET_FILE" 2>/dev/null || echo 0)
+  for ((j=0; j<copy_count; j++)); do
+    src_rel=$(yq ".tools[$i].copies[$j].source" "$PRESET_FILE")
+    tgt_rel=$(yq ".tools[$i].copies[$j].target" "$PRESET_FILE")
+    force=$(yq ".tools[$i].copies[$j].force" "$PRESET_FILE")
+    src=$(expand_path "$src_rel")
+    tgt=$(expand_path "$tgt_rel")
+
+    if [ "$force" = "true" ]; then
+      cp "$src" "$tgt"
+      log_applied "$tgt"
+    elif [ ! -e "$tgt" ]; then
+      cp "$src" "$tgt"
+      log_applied "$tgt"
+    else
+      log_skipped "$tgt"
+    fi
+  done
+
+  # custom script
+  post_script=$(yq ".tools[$i].hooks.post" "$PRESET_FILE")
+  if [ -n "$post_script" ]; then
+    post_script_path=$(expand_path "$post_script")
+    if [ -f "$post_script_path" ]; then
+      source "$post_script_path"
+    fi
+  fi
 done
 
 log_section "Create symlinks"
@@ -99,5 +129,27 @@ if [ "$symlink_count" -gt 0 ]; then
     src=$(expand_path "$src_rel")
     tgt=$(expand_path "$tgt_rel")
     create_symlink "$src" "$tgt"
+  done
+fi
+
+log_section "Copy files"
+copy_count=$(yq '.copies | length' "$PRESET_FILE" 2>/dev/null || echo 0)
+if [ "$copy_count" -gt 0 ]; then
+  for ((i=0; i<copy_count; i++)); do
+    src_rel=$(yq ".copies[$i].source" "$PRESET_FILE")
+    tgt_rel=$(yq ".copies[$i].target" "$PRESET_FILE")
+    force=$(yq ".copies[$i].force" "$PRESET_FILE")
+    src=$(expand_path "$src_rel")
+    tgt=$(expand_path "$tgt_rel")
+
+    if [ "$force" = "true" ]; then
+      cp "$src" "$tgt"
+      log_applied "$tgt"
+    elif [ ! -e "$tgt" ]; then
+      cp "$src" "$tgt"
+      log_applied "$tgt"
+    else
+      log_skipped "$tgt"
+    fi
   done
 fi

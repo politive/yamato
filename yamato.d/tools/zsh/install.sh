@@ -21,4 +21,4 @@ if [[ "$SHELL" != "$BREW_ZSH_PATH" ]]; then
   log_item "Default shell updated. Please open a new terminal tab to continue using the new shell."
 fi
 
-source $YAMATO_PATH/cli/zsh/completion.sh
+source $YAMATO_D_PATH/tools/zsh/completion.sh

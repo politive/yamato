@@ -1,4 +1,7 @@
 {
+  "[dockerfile]": {
+    "editor.formatOnSave": false
+  },
   "[markdown]": {
     "editor.wordWrap": "off",
     "editor.formatOnSave": true,
@@ -13,5 +16,12 @@
   "github.copilot.enable": {
     "*": false
   },
-  "editor.fontFamily": "HackGen Console NF"
+  "editor.fontFamily": "HackGen Console NF",
+  "github.copilot.nextEditSuggestions.enabled": true,
+  "python.analysis.typeCheckingMode": "basic",
+  "editor.formatOnSave": true,
+  "[ruby]": {
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "Shopify.ruby-lsp"
+  }
 }

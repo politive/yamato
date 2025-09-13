@@ -35,15 +35,25 @@ tools:
     check:
       type: command
       value: docker-compose
-    symlinks:
+    copies:
       - source: "$YAMATO_D_PATH/dotfiles/.docker/config.json"
         target: "$HOME/.docker/config.json"
+        force: true
 
   - name: Git
     command: git
     check:
       type: path
       value: /opt/homebrew/bin/git
+
+  - name: wezterm
+    command: wezterm
+    check:
+      type: command
+      value: wezterm
+    symlinks:
+      - source: $YAMATO_D_PATH/tools/wezterm/wezterm.lua
+        target: $HOME/.config/wezterm/wezterm.lua
 
   - name: starship
     command: starship
@@ -53,6 +63,12 @@ tools:
     symlinks:
       - source: $YAMATO_D_PATH/tools/starship/starship.toml
         target: $HOME/.config/starship.toml
+
+  - name: eza
+    command: eza
+    check:
+      type: command
+      value: eza
 
   # postgresql client library
   - name: libpq
@@ -78,27 +94,11 @@ tools:
     check:
       type: path
       value: /opt/homebrew/bin/zsh
+    hooks:
+      post: $YAMATO_D_PATH/tools/zsh/install.sh
     symlinks:
       - source: "$YAMATO_D_PATH/dotfiles/.zshrc"
         target: "$HOME/.zshrc"
-
-  - name: zsh-completions
-    command: zsh-completions
-    check:
-      type: command
-      value: zsh
-
-  - name: zsh-autosuggestions
-    command: zsh-autosuggestions
-    check:
-      type: command
-      value: zsh-autosuggestions
-
-  - name: zsh-syntax-highlighting
-    command: zsh-syntax-highlighting
-    check:
-      type: command
-      value: zsh-syntax-highlighting
 
   # VSCode
   - name: Visual Studio Code
