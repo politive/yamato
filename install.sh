@@ -12,7 +12,12 @@ else
 fi
 
 
-brew_install_command "yq" "yq"
+if command -v yq >/dev/null 2>&1; then
+  log_skipped "yq"
+else
+  run brew install yq
+  log_installed "yq"
+fi
 
 
 log_section "MacOS Settings"
@@ -68,6 +73,9 @@ for ((i=0; i<tool_count; i++)); do
   name="${tool_names[$i]}"
   cmd="${tool_cmds[$i]}"
 
+  # Start log section first
+  log_section "Install $name"
+
   # Get check type with default value
   check_type=$(yq ".tools[$i].check.type" "$PRESET_FILE" 2>/dev/null)
   if [ "$check_type" = "null" ] || [ -z "$check_type" ]; then
@@ -80,17 +88,13 @@ for ((i=0; i<tool_count; i++)); do
     check_value="$name"
   fi
 
-  case "$check_type" in
-    command)
-      brew_install_command "$cmd" "$check_value"
-      ;;
-    path)
-      brew_install_path "$cmd" "$check_value"
-      ;;
-    *)
-      log_failure "Unknown check type: $check_type for $name"
-      ;;
-  esac
+  # Get cask if specified
+  cask=$(yq ".tools[$i].cask" "$PRESET_FILE" 2>/dev/null)
+  if [ "$cask" = "true" ]; then
+    brew_install_cask "$cmd" "$name" "$check_type" "$check_value" "$i"
+  else
+    brew_install "$cmd" "$check_type" "$check_value" "$i"
+  fi
 
   # symlinks
   symlink_count=$(yq ".tools[$i].symlinks | length" "$PRESET_FILE" 2>/dev/null || echo 0)

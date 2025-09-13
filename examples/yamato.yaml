@@ -71,6 +71,10 @@ tools:
   - name: mise
     command: mise
 
+  - name: kimigayo
+    command: kimigayo
+    tap: politive/kimigayo
+
   - name: zsh
     command: zsh
     check:
