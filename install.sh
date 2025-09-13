@@ -1,11 +1,20 @@
 # Check the distribution name and version and abort if incompatible
 source $YAMATO_PATH/check-version.sh
+PRESET_FILE="$YAMATO_PATH/yamato.yaml"
 
-# Install Homebrew
-source $YAMATO_PATH/homebrew/install.sh
+
+log_section "Install Homebrew"
+if command -v brew >/dev/null 2>&1; then
+  log_skipped "Homebrew"
+else
+  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+  log_installed "Homebrew"
+fi
+
+
 brew_install_command "yq" "yq"
 
-# Apply MacOS Settings
+
 log_section "MacOS Settings"
 default_domains=()
 default_keys=()
@@ -46,7 +55,7 @@ for ((i=0; i<default_count; i++)); do
   fi
 done
 
-#
+
 tool_names=()
 tool_cmds=()
 tool_check_types=()
@@ -120,6 +129,7 @@ for ((i=0; i<tool_count; i++)); do
   fi
 done
 
+
 log_section "Create symlinks"
 symlink_count=$(yq '.symlinks | length' "$PRESET_FILE" 2>/dev/null || echo 0)
 if [ "$symlink_count" -gt 0 ]; then
@@ -131,6 +141,7 @@ if [ "$symlink_count" -gt 0 ]; then
     create_symlink "$src" "$tgt"
   done
 fi
+
 
 log_section "Copy files"
 copy_count=$(yq '.copies | length' "$PRESET_FILE" 2>/dev/null || echo 0)

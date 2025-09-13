@@ -12,75 +12,95 @@
 curl -L https://raw.githubusercontent.com/politive/yamato/main/boot.sh | bash
 ```
 
-### Mode
+### Options
 
-| Mode                    | Description                                                                                                                                                |
-| ----------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| --omakase               | Installs a recommended set of tools and settings automatically.<br>Best for users who want a ready-to-use, best-practice environment with minimal prompts. |
-| --interactive (default) | Lets you interactively select each tool and setting during installation.<br>Best for users who want to customize their setup step by step.                 |
-| --preset \<file\>       | Installs tools and settings based on your custom YAML file.<br>*Best for advanced users who want to define their own setup in a file.*                     |
+| Option        | Description                                     |
+| ------------- | ----------------------------------------------- |
+| `--verbose`   | Enable verbose logging output                   |
+| `--dryrun`    | Perform a dry run without making actual changes |
+| `--skip-pull` | Skip git pull if yamato is already installed    |
+| `--dev`       | Development mode (keeps .gitignore unchanged)   |
+| `--help`      | Show help information                           |
 
 ### Examples
 
 ```bash
-# Omakase (recommended defaults)
-curl -L https://raw.githubusercontent.com/politive/yamato/main/boot.sh --omakase | bash
+# Basic installation
+curl -L https://raw.githubusercontent.com/politive/yamato/main/boot.sh | bash
 
-# Interactive (choose each tool)
-curl -L https://raw.githubusercontent.com/politive/yamato/main/boot.sh --interactive | bash
+# With verbose output
+curl -L https://raw.githubusercontent.com/politive/yamato/main/boot.sh --verbose | bash
 
-# Use your own config file
-curl -L https://raw.githubusercontent.com/politive/yamato/main/boot.sh --preset mysetup.yml | bash
+# Dry run (test without changes)
+curl -L https://raw.githubusercontent.com/politive/yamato/main/boot.sh --dryrun | bash
+
+# Skip git pull if already installed
+curl -L https://raw.githubusercontent.com/politive/yamato/main/boot.sh --skip-pull | bash
 ```
 
-## 🧰 Tools
+## ⚙️ Configuration
 
-### Text Editor
-| Tool                                                |
-| --------------------------------------------------- |
-| [alacritty](https://github.com/alacritty/alacritty) |
-| [iterm2](https://github.com/gnachman/iTerm2)        |
-| [kitty](https://github.com/kovidgoyal/kitty)        |
-| [warp](https://github.com/warpdotdev/warp)          |
-| [WezTerm](https://github.com/wez/wezterm)           |
+YAMATO uses YAML configuration files to define tools, settings, and file operations. You can customize your setup by creating or modifying `yamato.yaml` in your repository.
 
-### Docker
+### YAML Structure
 
-| Category        | Tool                                                                  |
-| --------------- | --------------------------------------------------------------------- |
-| All in One tool | [Docker Desktop for Mac](https://github.com/docker/for-mac)           |
-| All in One tool | [Podman Desktop](https://github.com/podman-desktop/podman-desktop)    |
-| All in One tool | [Rancher Desktop](https://github.com/rancher-sandbox/rancher-desktop) |
-| CLI             | [Docker CLI](https://github.com/docker/cli)                           |
-| CLI             | [Docker Compose](https://github.com/docker/compose)                   |
-| Deamon          | [Colima](https://github.com/abiosoft/colima)                          |
-| Deamon          | [Lima](https://github.com/lima-vm/lima)                               |
-| TUI             | [lazydocker](https://github.com/jesseduffield/lazydocker)             |
+```yaml
+# macOS defaults configuration
+defaults:
+  - domain: com.apple.dock
+    key: autohide
+    type: bool
+    value: true
+    comment: "Enabling auto-hide"
 
-### Desktop Application
+# Tools installation and configuration
+tools:
+  - name: starship
+    command: starship
+    check:
+      type: command
+      value: starship
+    hooks:
+      post: $YAMATO_D_PATH/tools/starship/export.zsh
+    symlinks:
+      - source: $YAMATO_D_PATH/tools/starship/starship.toml
+        target: $HOME/.config/starship.toml
+    copies:
+      - source: "$YAMATO_D_PATH/dotfiles/.docker/config.json"
+        target: "$HOME/.docker/config.json"
+        force: true
 
-| Tool                                                                                | Description                                                 |
-| ----------------------------------------------------------------------------------- | ----------------------------------------------------------- |
-| [1Password](https://1password.com)                                                  | Password manager for teams and individuals.                 |
-| [Figma](https://www.figma.com)                                                      | Collaborative interface design tool.                        |
-| [Spotify](https://www.spotify.com)                                                  | Music streaming service.                                    |
-| [Microsoft Teams](https://www.microsoft.com/en/microsoft-teams/group-chat-software) | Communication and collaboration platform for teams.         |
-| [Visual Studio Code](https://code.visualstudio.com)                                 | A powerful source-code editor with extensions preinstalled. |
+# Global symlinks
+symlinks:
+  - source: "$YAMATO_D_PATH/dotfiles/.zshrc"
+    target: "$HOME/.zshrc"
 
-### Other CLI Tool
+# Global file copies
+copies:
+  - source: "$YAMATO_D_PATH/dotfiles/.editorconfig"
+    target: "$HOME/.editorconfig"
+    force: true
+```
 
-| Tool                                             | Description                                                    |
-| ------------------------------------------------ | -------------------------------------------------------------- |
-| [eza](https://github.com/eza-community/eza)      | A modern replacement for `ls` with icons and colors.           |
-| [git](https://github.com/git/git)                | A distributed version control system.                          |
-| [gum](https://github.com/charmbracelet/gum)      | A tool for building rich shell scripts with interactive UI.    |
-| [hackgen](https://github.com/yuru7/HackGen)      | A programming font with Nerd Font support and Japanese glyphs. |
-| [libpq](https://github.com/postgres/postgres)    | PostgreSQL client libraries and tools.                         |
-| [libyaml](https://github.com/yaml/libyaml)       | A C library for parsing and emitting YAML.                     |
-| [mise](https://github.com/jdx/mise)              | A runtime version manager for tools like Node, Ruby, etc.      |
-| [starship](https://github.com/starship/starship) | A fast, minimal, and highly customizable shell prompt.         |
-| [yq](https://github.com/mikefarah/yq)            | A lightweight and portable command-line YAML processor.        |
-| [zsh](https://github.com/zsh-users/zsh)          | A powerful and customizable Unix shell.                        |
+### Configuration Options
+
+| Option        | Description                        | Example                                    |
+| ------------- | ---------------------------------- | ------------------------------------------ |
+| `name`        | Tool identifier                    | `starship`                                 |
+| `command`     | Homebrew package name              | `starship`                                 |
+| `check.type`  | Check method (`command` or `path`) | `command`                                  |
+| `check.value` | Expected command or path           | `starship`                                 |
+| `hooks.post`  | Post-installation script           | `$YAMATO_D_PATH/tools/starship/export.zsh` |
+| `symlinks`    | Create symbolic links              | See example above                          |
+| `copies`      | Copy files with optional force     | See example above                          |
+| `force`       | Force overwrite existing files     | `true`                                     |
+
+### File Operations
+
+- **Symlinks**: Create symbolic links from source to target
+- **Copies**: Copy files from source to target
+  - `force: true` - Overwrite existing files
+  - `force: false` (default) - Skip if target exists
 
 ## 📄 License
 

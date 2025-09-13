@@ -1,8 +1,9 @@
 # Created by https://www.toptal.com/developers/gitignore/api/zsh,fish,macos,visualstudiocode,vim,emacs,jetbrains+all
 # Edit at https://www.toptal.com/developers/gitignore?templates=zsh,fish,macos,visualstudiocode,vim,emacs,jetbrains+all
 
-### Project ###
-.cache/
+### User Settings ###
+yamato.d/
+yamato.yaml
 
 ### Emacs ###
 # -*- mode: gitignore; -*-
