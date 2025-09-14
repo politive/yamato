@@ -107,6 +107,24 @@ for ((i=0; i<tool_count; i++)); do
     done
   fi
 
+  # Auto-discover config files in tools/<command>/dotfiles/ and create symlinks
+  tool_dotfiles_dir="$YAMATO_D_PATH/tools/$cmd/dotfiles"
+  if [ -d "$tool_dotfiles_dir" ]; then
+    find "$tool_dotfiles_dir" -type f | while read -r src_file; do
+      # Get relative path from tools/<command>/dotfiles/
+      rel_path="${src_file#$tool_dotfiles_dir/}"
+      tgt_file="$HOME/$rel_path"
+
+      # Create target directory if needed
+      tgt_dir=$(dirname "$tgt_file")
+      if [ ! -d "$tgt_dir" ]; then
+        mkdir -p "$tgt_dir"
+      fi
+
+      create_symlink "$src_file" "$tgt_file"
+    done
+  fi
+
   # copy files
   copy_count=$(yq ".tools[$i].copies | length" "$PRESET_FILE" 2>/dev/null || echo 0)
   for ((j=0; j<copy_count; j++)); do
@@ -127,12 +145,20 @@ for ((i=0; i<tool_count; i++)); do
     fi
   done
 
-  # custom script
+  # custom script (YAML指定または自動検出)
   post_script=$(yq ".tools[$i].hooks.post" "$PRESET_FILE")
-  if [ -n "$post_script" ]; then
+  if [ -n "$post_script" ] && [ "$post_script" != "null" ]; then
+    # YAMLで明示的に指定されている場合
     post_script_path=$(expand_path "$post_script")
     if [ -f "$post_script_path" ]; then
       source "$post_script_path"
+    fi
+  else
+    # 暗黙的にpost_install.shを検出
+    tool_post_install_script="$YAMATO_D_PATH/tools/$cmd/post_install.sh"
+    if [ -f "$tool_post_install_script" ]; then
+      log_info "Running post-install script for $cmd"
+      source "$tool_post_install_script"
     fi
   fi
 done

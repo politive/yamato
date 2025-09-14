@@ -26,12 +26,6 @@ defaults:
 tools:
   - command: docker
 
-  - command: docker-compose
-    copies:
-      - source: "$YAMATO_D_PATH/dotfiles/.docker/config.json"
-        target: "$HOME/.docker/config.json"
-        force: true
-
   - command: git
     check:
       type: path
@@ -43,9 +37,6 @@ tools:
         target: $HOME/.config/wezterm/wezterm.lua
 
   - command: starship
-    symlinks:
-      - source: $YAMATO_D_PATH/tools/starship/starship.toml
-        target: $HOME/.config/starship.toml
 
   - command: eza
 
@@ -87,14 +78,3 @@ tools:
 
 # custom symlinks
 symlinks:
-  - source: "$YAMATO_D_PATH/dotfiles/.zshrc"
-    target: "$HOME/.zshrc"
-
-  - source: "$YAMATO_D_PATH/dotfiles/.zshenv"
-    target: "$HOME/.zshenv"
-
-  - source: "$YAMATO_D_PATH/dotfiles/.zprofile"
-    target: "$HOME/.zprofile"
-
-  - source: "$YAMATO_D_PATH/dotfiles/.editorconfig"
-    target: "$HOME/.editorconfig"

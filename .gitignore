@@ -5,6 +5,10 @@
 yamato.d/
 yamato.yaml
 
+### Yamato ###
+!examples/yamato.d/
+!examples/yamato.yaml
+
 ### Emacs ###
 # -*- mode: gitignore; -*-
 *~
