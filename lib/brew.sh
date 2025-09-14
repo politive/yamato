@@ -4,11 +4,11 @@ brew_install() {
   local check_value="$3"
   local tool_index="$4"
 
+  # Run tap if needed
+  brew_tap "$tool_index" "$check_type" "$check_value"
+
   case "$check_type" in
     command)
-      # Run tap if needed
-      brew_tap_command "$tool_index" "$check_value"
-
       # log_section is now handled by caller
       if command -v "$check_value" >/dev/null 2>&1; then
         log_skipped "$brew_name"
@@ -18,9 +18,6 @@ brew_install() {
       fi
       ;;
     path)
-      # Run tap if needed
-      brew_tap_path "$tool_index" "$check_value"
-
       # log_section is now handled by caller
       if [ -e "$check_value" ]; then
         log_skipped "$brew_name"
@@ -35,30 +32,31 @@ brew_install() {
   esac
 }
 
-brew_tap_command() {
+brew_tap() {
   local tool_index="$1"
-  local cmd_name="$2"
+  local check_type="$2"
+  local check_value="$3"
 
-  if ! command -v "$cmd_name" >/dev/null 2>&1; then
-    # Tool not installed, check if tap is needed
-    local tap=$(yq ".tools[$tool_index].tap" "$PRESET_FILE" 2>/dev/null)
-    if [ "$tap" != "null" ] && [ -n "$tap" ]; then
-      run brew tap "$tap"
-    fi
-  fi
-}
-
-brew_tap_path() {
-  local tool_index="$1"
-  local path="$2"
-
-  if [ ! -e "$path" ]; then
-    # Tool not installed, check if tap is needed
-    local tap=$(yq ".tools[$tool_index].tap" "$PRESET_FILE" 2>/dev/null)
-    if [ "$tap" != "null" ] && [ -n "$tap" ]; then
-      run brew tap "$tap"
-    fi
-  fi
+  case "$check_type" in
+    command)
+      if ! command -v "$check_value" >/dev/null 2>&1; then
+        # Tool not installed, check if tap is needed
+        local tap=$(yq ".tools[$tool_index].tap" "$PRESET_FILE" 2>/dev/null)
+        if [ "$tap" != "null" ] && [ -n "$tap" ]; then
+          run brew tap "$tap"
+        fi
+      fi
+      ;;
+    path)
+      if [ ! -e "$check_value" ]; then
+        # Tool not installed, check if tap is needed
+        local tap=$(yq ".tools[$tool_index].tap" "$PRESET_FILE" 2>/dev/null)
+        if [ "$tap" != "null" ] && [ -n "$tap" ]; then
+          run brew tap "$tap"
+        fi
+      fi
+      ;;
+  esac
 }
 
 brew_install_cask() {
@@ -68,11 +66,11 @@ brew_install_cask() {
   local check_value="$4"
   local tool_index="$5"
 
+  # Run tap if needed
+  brew_tap "$tool_index" "$check_type" "$check_value"
+
   case "$check_type" in
     command)
-      # Run tap if needed
-      brew_tap_command "$tool_index" "$check_value"
-
       # log_section is now handled by caller
       if command -v "$check_value" >/dev/null 2>&1; then
         log_skipped "$cask"
@@ -82,9 +80,6 @@ brew_install_cask() {
       fi
       ;;
     path)
-      # Run tap if needed
-      brew_tap_path "$tool_index" "$check_value"
-
       # log_section is now handled by caller
       if [ -e "$check_value" ]; then
         log_skipped "$cask"
