@@ -24,59 +24,48 @@ defaults:
     comment: "Icon Size: 28px"
 
 tools:
-  - name: docker
-    command: docker
+  - command: docker
 
-  - name: docker-compose
-    command: docker-compose
+  - command: docker-compose
     copies:
       - source: "$YAMATO_D_PATH/dotfiles/.docker/config.json"
         target: "$HOME/.docker/config.json"
         force: true
 
-  - name: Git
-    command: git
+  - command: git
     check:
       type: path
       value: /opt/homebrew/bin/git
 
-  - name: wezterm
-    command: wezterm
+  - command: wezterm
     symlinks:
       - source: $YAMATO_D_PATH/tools/wezterm/wezterm.lua
         target: $HOME/.config/wezterm/wezterm.lua
 
-  - name: starship
-    command: starship
+  - command: starship
     symlinks:
       - source: $YAMATO_D_PATH/tools/starship/starship.toml
         target: $HOME/.config/starship.toml
 
-  - name: eza
-    command: eza
+  - command: eza
 
   # postgresql client library
-  - name: libpq
-    command: libpq
+  - command: libpq
     check:
       type: command
       value: pg_config
 
-  - name: libyaml
-    command: libyaml
+  - command: libyaml
     check:
       type: path
       value: /opt/homebrew/include/yaml.h
 
-  - name: mise
-    command: mise
+  - command: mise
 
-  - name: kimigayo
-    command: kimigayo
+  - command: kimigayo
     tap: politive/kimigayo
 
-  - name: zsh
-    command: zsh
+  - command: zsh
     check:
       type: path
       value: /opt/homebrew/bin/zsh
@@ -87,8 +76,7 @@ tools:
         target: "$HOME/.zshrc"
 
   # VSCode
-  - name: Visual Studio Code
-    command: visual-studio-code
+  - command: visual-studio-code
     cask: true
     check:
       type: command
@@ -97,6 +85,7 @@ tools:
       - source: $YAMATO_D_PATH/tools/vscode/settings.json
         target: $HOME/Library/Application Support/Code/User/settings.json
 
+# custom symlinks
 symlinks:
   - source: "$YAMATO_D_PATH/dotfiles/.zshrc"
     target: "$HOME/.zshrc"

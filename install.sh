@@ -59,20 +59,15 @@ for ((i=0; i<default_count; i++)); do
 done
 
 
-tool_names=()
 tool_cmds=()
-
-while IFS= read -r line; do tool_names+=("$line"); done < <(yq '.tools[].name' "$PRESET_FILE")
 while IFS= read -r line; do tool_cmds+=("$line"); done < <(yq '.tools[].command' "$PRESET_FILE")
-
-tool_count=${#tool_names[@]}
+tool_count=${#tool_cmds[@]}
 
 for ((i=0; i<tool_count; i++)); do
-  name="${tool_names[$i]}"
   cmd="${tool_cmds[$i]}"
 
   # Start log section first
-  log_section "Install $name"
+  log_section "Install $cmd"
 
   # Get check type with default value
   check_type=$(yq ".tools[$i].check.type" "$PRESET_FILE" 2>/dev/null)
@@ -80,25 +75,25 @@ for ((i=0; i<tool_count; i++)); do
     check_type="command"
   fi
 
-  # Get check value with default value (use name if not specified)
+  # Get check value with default value (use command if not specified)
   check_value=$(yq ".tools[$i].check.value" "$PRESET_FILE" 2>/dev/null)
   if [ "$check_value" = "null" ] || [ -z "$check_value" ]; then
-    check_value="$name"
+    check_value="$cmd"
   fi
 
   # Get cask if specified
   cask=$(yq ".tools[$i].cask" "$PRESET_FILE" 2>/dev/null)
   if [ "$cask" = "true" ]; then
-    brew_install_cask "$cmd" "$name" "$check_type" "$check_value" "$i"
+    brew_install_cask "$cmd" "$cmd" "$check_type" "$check_value" "$i"
   else
     brew_install "$cmd" "$check_type" "$check_value" "$i"
   fi
 
-  # symlinks from dotfiles/<tool_name>/
-  dotfiles_dir="$YAMATO_D_PATH/dotfiles/$name"
+  # symlinks from dotfiles/<command>/
+  dotfiles_dir="$YAMATO_D_PATH/dotfiles/$cmd"
   if [ -d "$dotfiles_dir" ]; then
     find "$dotfiles_dir" -type f | while read -r src_file; do
-      # Get relative path from dotfiles/<tool_name>/
+      # Get relative path from dotfiles/<command>/
       rel_path="${src_file#$dotfiles_dir/}"
       tgt_file="$HOME/$rel_path"
 
