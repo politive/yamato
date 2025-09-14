@@ -12,9 +12,12 @@ echo "$ascii_art"
 YAMATO_PATH="$HOME/.local/share/yamato"
 YAMATO_D_PATH="$YAMATO_PATH/yamato.d"
 
-for libfile in "$YAMATO_PATH/lib/"*.sh; do
-  [ -f "$libfile" ] && source "$libfile"
-done
+# Load library functions
+source "$YAMATO_PATH/lib/log.sh"
+source "$YAMATO_PATH/lib/args.sh"
+source "$YAMATO_PATH/lib/run.sh"
+source "$YAMATO_PATH/lib/fs.sh"
+source "$YAMATO_PATH/lib/brew.sh"
 
 # Load boot functions
 for bootfile in "$YAMATO_PATH/boot/"*.sh; do
