@@ -1,15 +1,3 @@
-# TODO: 移行後に削除
-brew_install() {
-  local name="$1"
-  log_section "Install $name"
-  if command -v "$name" >/dev/null 2>&1; then
-    log_skipped "$name"
-  else
-    run brew install "$name"
-    log_installed "$name"
-  fi
-}
-
 brew_install() {
   local brew_name="$1"
   local check_type="$2"
