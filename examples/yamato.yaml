@@ -26,6 +26,9 @@ defaults:
 tools:
   - command: docker
 
+  - command: colima
+    description: "container runtime"
+
   - command: git
     check:
       type: path
