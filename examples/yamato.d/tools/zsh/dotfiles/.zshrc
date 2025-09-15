@@ -1,7 +1,3 @@
-# Locale
-export LANG=ja_JP.UTF-8
-export LC_ALL=ja_JP.UTF-8
-
 # History
 HISTFILE=~/.zsh_history
 HISTSIZE=10000
@@ -12,9 +8,6 @@ setopt share_history inc_append_history append_history
 YAMATO_D_PATH="$HOME/.local/share/yamato/yamato.d"
 for file in $YAMATO_D_PATH/tools/*/export.zsh; do
   if [ -f "$file" ]; then
-    echo "================================"
-    echo "$file"
-    echo "================================"
     source "$file"
   fi
 done
