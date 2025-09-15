@@ -1,4 +1,16 @@
 {
+  "editor.fontFamily": "HackGen Console NF",
+  "editor.formatOnSave": true,
+  "github.copilot.enable": {
+    "*": false
+  },
+  "github.copilot.advanced": {},
+  "github.copilot.nextEditSuggestions.enabled": true,
+  "github.copilot.chat.localeOverride": "ja",
+  "workbench.settings.applyToAllProfiles": [
+    "github.copilot.chat.localeOverride"
+  ],
+  "python.analysis.typeCheckingMode": "basic",
   "[dockerfile]": {
     "editor.formatOnSave": false
   },
@@ -8,18 +20,6 @@
     "editor.formatOnPaste": true,
     "editor.defaultFormatter": "yzhang.markdown-all-in-one"
   },
-  "github.copilot.chat.localeOverride": "ja",
-  "workbench.settings.applyToAllProfiles": [
-    "github.copilot.chat.localeOverride"
-  ],
-  "github.copilot.advanced": {},
-  "github.copilot.enable": {
-    "*": false
-  },
-  "editor.fontFamily": "HackGen Console NF",
-  "github.copilot.nextEditSuggestions.enabled": true,
-  "python.analysis.typeCheckingMode": "basic",
-  "editor.formatOnSave": true,
   "[ruby]": {
     "editor.formatOnSave": true,
     "editor.defaultFormatter": "Shopify.ruby-lsp"

@@ -32,13 +32,16 @@ tools:
       value: /opt/homebrew/bin/git
 
   - command: wezterm
-    symlinks:
-      - source: $YAMATO_D_PATH/tools/wezterm/wezterm.lua
-        target: $HOME/.config/wezterm/wezterm.lua
+    description: "terminal"
+
+  - command: editorconfig
+    description: "editorconfig"
 
   - command: starship
+    description: "prompt starship"
 
   - command: eza
+    description: "eza"
 
   # postgresql client library
   - command: libpq
@@ -60,11 +63,6 @@ tools:
     check:
       type: path
       value: /opt/homebrew/bin/zsh
-    hooks:
-      post: $YAMATO_D_PATH/tools/zsh/install.sh
-    symlinks:
-      - source: "$YAMATO_D_PATH/dotfiles/.zshrc"
-        target: "$HOME/.zshrc"
 
   # VSCode
   - command: visual-studio-code
@@ -72,9 +70,6 @@ tools:
     check:
       type: command
       value: code
-    symlinks:
-      - source: $YAMATO_D_PATH/tools/vscode/settings.json
-        target: $HOME/Library/Application Support/Code/User/settings.json
 
 # custom symlinks
 symlinks:
