@@ -89,24 +89,6 @@ for ((i=0; i<tool_count; i++)); do
     brew_install "$cmd" "$check_type" "$check_value" "$i"
   fi
 
-  # symlinks from dotfiles/<command>/
-  dotfiles_dir="$YAMATO_D_PATH/dotfiles/$cmd"
-  if [ -d "$dotfiles_dir" ]; then
-    find "$dotfiles_dir" -type f | while read -r src_file; do
-      # Get relative path from dotfiles/<command>/
-      rel_path="${src_file#$dotfiles_dir/}"
-      tgt_file="$HOME/$rel_path"
-
-      # Create target directory if needed
-      tgt_dir=$(dirname "$tgt_file")
-      if [ ! -d "$tgt_dir" ]; then
-        mkdir -p "$tgt_dir"
-      fi
-
-      create_symlink "$src_file" "$tgt_file"
-    done
-  fi
-
   # Auto-discover config files in tools/<command>/dotfiles/ and create symlinks
   tool_dotfiles_dir="$YAMATO_D_PATH/tools/$cmd/dotfiles"
   if [ -d "$tool_dotfiles_dir" ]; then
@@ -125,75 +107,9 @@ for ((i=0; i<tool_count; i++)); do
     done
   fi
 
-  # copy files
-  copy_count=$(yq ".tools[$i].copies | length" "$PRESET_FILE" 2>/dev/null || echo 0)
-  for ((j=0; j<copy_count; j++)); do
-    src_rel=$(yq ".tools[$i].copies[$j].source" "$PRESET_FILE")
-    tgt_rel=$(yq ".tools[$i].copies[$j].target" "$PRESET_FILE")
-    force=$(yq ".tools[$i].copies[$j].force" "$PRESET_FILE")
-    src=$(expand_path "$src_rel")
-    tgt=$(expand_path "$tgt_rel")
-
-    if [ "$force" = "true" ]; then
-      cp "$src" "$tgt"
-      log_applied "$tgt"
-    elif [ ! -e "$tgt" ]; then
-      cp "$src" "$tgt"
-      log_applied "$tgt"
-    else
-      log_skipped "$tgt"
-    fi
-  done
-
-  # custom script (YAML指定または自動検出)
-  post_script=$(yq ".tools[$i].hooks.post" "$PRESET_FILE")
-  if [ -n "$post_script" ] && [ "$post_script" != "null" ]; then
-    # YAMLで明示的に指定されている場合
-    post_script_path=$(expand_path "$post_script")
-    if [ -f "$post_script_path" ]; then
-      source "$post_script_path"
-    fi
-  else
-    # 暗黙的にpost_install.shを検出
-    tool_post_install_script="$YAMATO_D_PATH/tools/$cmd/post_install.sh"
-    if [ -f "$tool_post_install_script" ]; then
-      source "$tool_post_install_script"
-    fi
+  # Auto-detect and run post_install.sh
+  tool_post_install_script="$YAMATO_D_PATH/tools/$cmd/post_install.sh"
+  if [ -f "$tool_post_install_script" ]; then
+    source "$tool_post_install_script"
   fi
 done
-
-
-log_section "Create symlinks"
-symlink_count=$(yq '.symlinks | length' "$PRESET_FILE" 2>/dev/null || echo 0)
-if [ "$symlink_count" -gt 0 ]; then
-  for ((i=0; i<symlink_count; i++)); do
-    src_rel=$(yq ".symlinks[$i].source" "$PRESET_FILE")
-    tgt_rel=$(yq ".symlinks[$i].target" "$PRESET_FILE")
-    src=$(expand_path "$src_rel")
-    tgt=$(expand_path "$tgt_rel")
-    create_symlink "$src" "$tgt"
-  done
-fi
-
-
-log_section "Copy files"
-copy_count=$(yq '.copies | length' "$PRESET_FILE" 2>/dev/null || echo 0)
-if [ "$copy_count" -gt 0 ]; then
-  for ((i=0; i<copy_count; i++)); do
-    src_rel=$(yq ".copies[$i].source" "$PRESET_FILE")
-    tgt_rel=$(yq ".copies[$i].target" "$PRESET_FILE")
-    force=$(yq ".copies[$i].force" "$PRESET_FILE")
-    src=$(expand_path "$src_rel")
-    tgt=$(expand_path "$tgt_rel")
-
-    if [ "$force" = "true" ]; then
-      cp "$src" "$tgt"
-      log_applied "$tgt"
-    elif [ ! -e "$tgt" ]; then
-      cp "$src" "$tgt"
-      log_applied "$tgt"
-    else
-      log_skipped "$tgt"
-    fi
-  done
-fi

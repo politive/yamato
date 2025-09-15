@@ -55,52 +55,42 @@ defaults:
 
 # Tools installation and configuration
 tools:
-  - name: starship
-    command: starship
-    check:
-      type: command
-      value: starship
-    hooks:
-      post: $YAMATO_D_PATH/tools/starship/export.zsh
-    symlinks:
-      - source: $YAMATO_D_PATH/tools/starship/starship.toml
-        target: $HOME/.config/starship.toml
-    copies:
-      - source: "$YAMATO_D_PATH/dotfiles/.docker/config.json"
-        target: "$HOME/.docker/config.json"
-        force: true
-
-# Global symlinks
-symlinks:
-  - source: "$YAMATO_D_PATH/dotfiles/.zshrc"
-    target: "$HOME/.zshrc"
-
-# Global file copies
-copies:
-  - source: "$YAMATO_D_PATH/dotfiles/.editorconfig"
-    target: "$HOME/.editorconfig"
-    force: true
+  - command: git
+    description: "Version control system"
+    check:  # Check if already installed
+      type: path
+      value: /opt/homebrew/bin/git
 ```
 
 ### Configuration Options
 
-| Option        | Description                        | Example                                    |
-| ------------- | ---------------------------------- | ------------------------------------------ |
-| `name`        | Tool identifier                    | `starship`                                 |
-| `command`     | Homebrew package name              | `starship`                                 |
-| `check.type`  | Check method (`command` or `path`) | `command`                                  |
-| `check.value` | Expected command or path           | `starship`                                 |
-| `hooks.post`  | Post-installation script           | `$YAMATO_D_PATH/tools/starship/export.zsh` |
-| `symlinks`    | Create symbolic links              | See example above                          |
-| `copies`      | Copy files with optional force     | See example above                          |
-| `force`       | Force overwrite existing files     | `true`                                     |
+| Option        | Description                        | Example                               |
+| ------------- | ---------------------------------- | ------------------------------------- |
+| `command`     | Homebrew package name              | `starship`                            |
+| `description` | Tool description (optional)        | `"Cross-shell prompt for astronauts"` |
+| `check.type`  | Check method (`command` or `path`) | `command`                             |
+| `check.value` | Expected command or path to check  | `starship`                            |
+| `cask`        | Install as Homebrew cask           | `true`                                |
+| `tap`         | Custom Homebrew tap                | `politive/kimigayo`                   |
+
+### Post-Install Scripts
+
+YAMATO automatically detects and runs post-installation scripts by placing `post_install.sh` in `yamato.d/tools/{command}/post_install.sh`
+
+Example auto-detection:
+```bash
+# yamato.d/tools/colima/post_install.sh
+if command -v colima >/dev/null 2>&1; then
+  log_skipped "colima service start (already installed)"
+else
+  brew services start colima
+  log_applied "colima service started"
+fi
+```
 
 ### File Operations
 
-- **Symlinks**: Create symbolic links from source to target
-- **Copies**: Copy files from source to target
-  - `force: true` - Overwrite existing files
-  - `force: false` (default) - Skip if target exists
+YAMATO automatically creates symlinks from `yamato.d/tools/{command}/dotfiles/` to your home directory. Simply place your configuration files in the appropriate tool directory and they will be automatically linked.
 
 ## 📄 License
 

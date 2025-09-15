@@ -73,6 +73,3 @@ tools:
     check:
       type: command
       value: code
-
-# custom symlinks
-symlinks:
