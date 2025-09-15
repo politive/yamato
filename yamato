@@ -29,6 +29,7 @@ check_version
 fetch_repo
 init_config
 run_install
+install_command
 
 
 echo ""

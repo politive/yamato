@@ -4,6 +4,9 @@ HISTSIZE=10000
 SAVEHIST=10000
 setopt share_history inc_append_history append_history
 
+# PATH
+export PATH="$HOME/.local/bin:$PATH"
+
 # tools/*/export.zshを読み込む
 YAMATO_D_PATH="$HOME/.local/share/yamato/yamato.d"
 for file in $YAMATO_D_PATH/tools/*/export.zsh; do

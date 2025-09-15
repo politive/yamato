@@ -9,7 +9,13 @@
 ## 🚀 Quick Start
 
 ```bash
-curl -L https://raw.githubusercontent.com/politive/yamato/main/boot.sh | bash
+# Clone and run yamato
+git clone https://github.com/politive/yamato.git ~/.local/share/yamato
+cd ~/.local/share/yamato
+./yamato
+
+# Run yamato again (after initial installation)
+yamato
 ```
 
 ### Options
@@ -26,21 +32,24 @@ curl -L https://raw.githubusercontent.com/politive/yamato/main/boot.sh | bash
 
 ```bash
 # Basic installation
-curl -L https://raw.githubusercontent.com/politive/yamato/main/boot.sh | bash
+curl -L https://raw.githubusercontent.com/politive/yamato/main/yamato | bash
 
-# With verbose output
-curl -L https://raw.githubusercontent.com/politive/yamato/main/boot.sh --verbose | bash
-
-# Dry run (test without changes)
-curl -L https://raw.githubusercontent.com/politive/yamato/main/boot.sh --dryrun | bash
-
-# Skip git pull if already installed
-curl -L https://raw.githubusercontent.com/politive/yamato/main/boot.sh --skip-pull | bash
+# Run yamato with options
+yamato --verbose
+yamato --dryrun
+yamato --skip-pull
+yamato --help
 ```
 
 ## ⚙️ Configuration
 
-YAMATO uses YAML configuration files to define tools, settings, and file operations. You can customize your setup by creating or modifying `yamato.yaml` in your repository.
+YAMATO uses YAML configuration files to define tools, settings, and file operations. To customize your setup:
+
+1. **Fork this repository** to your GitHub account
+2. **Clone your fork** to `~/.local/share/yamato`
+3. **Modify `yamato.yaml`** to add your tools and settings
+4. **Update `yamato.d/`** with your configuration files
+5. **Run yamato** from your local repository
 
 ### YAML Structure
 
@@ -91,6 +100,16 @@ fi
 ### File Operations
 
 YAMATO automatically creates symlinks from `yamato.d/tools/{command}/dotfiles/` to your home directory. Simply place your configuration files in the appropriate tool directory and they will be automatically linked.
+
+### PATH Configuration
+
+After installation, add the following to your `~/.zshrc` to use the `yamato` command:
+
+```bash
+export PATH="$HOME/.local/bin:$PATH"
+```
+
+This is already included in the provided `.zshrc` sample.
 
 ## 📄 License
 
