@@ -3,10 +3,6 @@ log_section() {
   echo "🚀 $1"
 }
 
-log_item() {
-  echo "  $1"
-}
-
 log_installed() {
   echo "  ✅ $1 installed."
 }

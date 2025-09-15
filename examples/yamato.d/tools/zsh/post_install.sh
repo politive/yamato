@@ -10,15 +10,19 @@ else
 fi
 
 if ! grep -q "^$BREW_ZSH_PATH\$" /etc/shells; then
-  log_item "Adding $BREW_ZSH_PATH to /etc/shells (requires sudo)"
+  log_applied "Adding $BREW_ZSH_PATH to /etc/shells"
   echo "$BREW_ZSH_PATH" | sudo tee -a /etc/shells >/dev/null 2>&1
-  log_item "$BREW_ZSH_PATH added to /etc/shells"
+  log_applied "$BREW_ZSH_PATH added to /etc/shells"
+else
+  log_skipped "$BREW_ZSH_PATH already in /etc/shells"
 fi
 
 if [[ "$SHELL" != "$BREW_ZSH_PATH" ]]; then
-  log_item "Changing default shell to $BREW_ZSH_PATH"
+  log_applied "Changing default shell to $BREW_ZSH_PATH"
   chsh -s "$BREW_ZSH_PATH" >/dev/null 2>&1
-  log_item "Default shell updated. Please open a new terminal tab to continue using the new shell."
+  log_applied "Default shell updated. Please open a new terminal tab to continue using the new shell."
+else
+  log_skipped "Default shell already set to $BREW_ZSH_PATH"
 fi
 
 

@@ -157,7 +157,6 @@ for ((i=0; i<tool_count; i++)); do
     # 暗黙的にpost_install.shを検出
     tool_post_install_script="$YAMATO_D_PATH/tools/$cmd/post_install.sh"
     if [ -f "$tool_post_install_script" ]; then
-      log_info "Running post-install script for $cmd"
       source "$tool_post_install_script"
     fi
   fi

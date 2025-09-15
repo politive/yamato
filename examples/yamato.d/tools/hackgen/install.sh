@@ -11,14 +11,10 @@ TMP_DIR="$(mktemp -d)"
 ZIP_PATH="$TMP_DIR/HackGen_NF_v2.10.0.zip"
 FONT_DIR="$TMP_DIR/HackGen_NF_v2.10.0"
 
-curl -sL "$FONT_URL" -o "$ZIP_PATH" >/dev/null 2>&1
-log_item "Downloaded font archive..."
-
-unzip -q "$ZIP_PATH" -d "$TMP_DIR" >/dev/null 2>&1
-log_item "Unzipped font archive..."
-
-cp "$FONT_DIR/HackGenConsoleNF-Regular.ttf" ~/Library/Fonts/
-cp "$FONT_DIR/HackGenConsoleNF-Bold.ttf" ~/Library/Fonts/
-log_item "Installed fonts to ~/Library/Fonts"
+run curl -sL "$FONT_URL" -o "$ZIP_PATH"
+run unzip -q "$ZIP_PATH" -d "$TMP_DIR"
+run cp "$FONT_DIR/HackGenConsoleNF-Regular.ttf" ~/Library/Fonts/
+run cp "$FONT_DIR/HackGenConsoleNF-Bold.ttf" ~/Library/Fonts/
+log_installed "HackGen Nerd Font"
 
 rm -rf "$TMP_DIR"
