@@ -24,7 +24,12 @@ defaults:
     comment: "Icon Size: 28px"
 
 tools:
+  ### development ###
+  - command: mise
+    description: "package manager like asdf"
+
   - command: docker
+  - command: docker-compose
 
   - command: colima
     description: "container runtime"
@@ -33,6 +38,9 @@ tools:
     check:
       type: path
       value: /opt/homebrew/bin/git
+
+  - command: gh
+    description: "GitHub CLI"
 
   - command: wezterm
     description: "terminal"
@@ -46,30 +54,76 @@ tools:
   - command: eza
     description: "eza"
 
-  # postgresql client library
   - command: libpq
+    description: "postgresql client library"
     check:
       type: command
       value: pg_config
 
   - command: libyaml
+    description: "yaml library"
     check:
       type: path
       value: /opt/homebrew/include/yaml.h
 
-  - command: mise
-
   - command: kimigayo
     tap: politive/kimigayo
+    description: "play the National Anthem of Japan"
 
   - command: zsh
     check:
       type: path
       value: /opt/homebrew/bin/zsh
 
-  # VSCode
-  - command: visual-studio-code
+  - command: google-chrome
     cask: true
+    description: "Browser"
     check:
-      type: command
-      value: code
+      type: path
+      value: /Applications/Google Chrome.app
+
+  - command: 1password
+    cask: true
+    description: "Password manager"
+    check:
+      type: path
+      value: /Applications/1Password.app
+
+  - command: spotify
+    cask: true
+    description: "Music streaming service"
+    check:
+      type: path
+      value: /Applications/Spotify.app
+
+  - command: signal
+    cask: true
+    description: "Messaging and Calling App"
+    check:
+      type: path
+      value: /Applications/Signal.app
+
+  - command: cursor
+    cask: true
+    description: "Developer's AI Code Editor"
+
+  - command: figma
+    cask: true
+    description: "Design tool"
+    check:
+      type: path
+      value: /Applications/Figma.app
+
+  - command: discord
+    cask: true
+    description: "Messaging and Calling App"
+    check:
+      type: path
+      value: /Applications/Discord.app
+
+  - command: slack
+    cask: true
+    description: "Messaging and Calling App"
+    check:
+      type: path
+      value: /Applications/Slack.app
