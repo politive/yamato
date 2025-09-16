@@ -8,6 +8,8 @@
 
 ## 🚀 Quick Start
 
+### Option 1: Use the original repository
+
 ```bash
 # Clone and run yamato
 git clone https://github.com/politive/yamato.git ~/.local/share/yamato
@@ -16,6 +18,21 @@ cd ~/.local/share/yamato
 
 # Run yamato again (after initial installation)
 yamato
+```
+
+### Option 2: Fork and customize (Recommended)
+
+```bash
+# 1. Fork this repository on GitHub
+# 2. Clone your fork
+git clone https://github.com/yourusername/yamato.git ~/.local/share/yamato
+cd ~/.local/share/yamato
+
+# 3. Run yamato with your fork
+YAMATO_REPO=yourusername/yamato ./yamato
+
+# 4. Run yamato again (after initial installation)
+YAMATO_REPO=yourusername/yamato yamato
 ```
 
 ### Options
@@ -27,6 +44,12 @@ yamato
 | `--skip-pull` | Skip git pull if yamato is already installed    |
 | `--dev`       | Development mode (keeps .gitignore unchanged)   |
 | `--help`      | Show help information                           |
+
+### Environment Variables
+
+| Variable      | Description                            | Default           |
+| ------------- | -------------------------------------- | ----------------- |
+| `YAMATO_REPO` | GitHub repository in `org/repo` format | `politive/yamato` |
 
 ### Examples
 
@@ -73,14 +96,18 @@ tools:
 
 ### Configuration Options
 
-| Option        | Description                        | Example                               |
-| ------------- | ---------------------------------- | ------------------------------------- |
-| `command`     | Homebrew package name              | `starship`                            |
-| `description` | Tool description (optional)        | `"Cross-shell prompt for astronauts"` |
-| `check.type`  | Check method (`command` or `path`) | `command`                             |
-| `check.value` | Expected command or path to check  | `starship`                            |
-| `cask`        | Install as Homebrew cask           | `true`                                |
-| `tap`         | Custom Homebrew tap                | `politive/kimigayo`                   |
+| Option        | Description                       | Default    | Example                               |
+| ------------- | --------------------------------- | ---------- | ------------------------------------- |
+| `command`     | Homebrew package name             | -          | `starship`                            |
+| `description` | Tool description (optional)       | -          | `"Cross-shell prompt for astronauts"` |
+| `check.type`  | How to check if tool is installed | `command`  | `command` or `path`                   |
+| `check.value` | What to check for                 | `$command` | `starship` or `/opt/homebrew/bin/git` |
+| `cask`        | Install as Homebrew cask          | `false`    | `true`                                |
+| `tap`         | Custom Homebrew tap               | -          | `politive/kimigayo`                   |
+
+**Check Types:**
+- `command`: Check if command exists in PATH (default)
+- `path`: Check if specific file path exists
 
 ### Post-Install Scripts
 

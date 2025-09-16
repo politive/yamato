@@ -24,23 +24,27 @@ defaults:
     comment: "Icon Size: 28px"
 
 tools:
-  ### development ###
+  ## development
   - command: mise
     description: "package manager like asdf"
 
+  ## docker
   - command: docker
   - command: docker-compose
-
+  - command: lazydocker
+    description: "docker TUI client"
   - command: colima
     description: "container runtime"
 
+  ## git
   - command: git
     check:
       type: path
       value: /opt/homebrew/bin/git
-
   - command: gh
     description: "GitHub CLI"
+  - command: lazygit
+    description: "git TUI Client"
 
   - command: wezterm
     description: "terminal"
@@ -52,7 +56,7 @@ tools:
     description: "prompt starship"
 
   - command: eza
-    description: "eza"
+    description: "ls"
 
   - command: libpq
     description: "postgresql client library"
@@ -81,6 +85,13 @@ tools:
     check:
       type: path
       value: /Applications/Google Chrome.app
+
+  - command: openvpn-connect
+    cask: true
+    description: "VPN client"
+    check:
+      type: path
+      value: /Applications/OpenVPN Connect.app
 
   - command: 1password
     cask: true
