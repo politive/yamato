@@ -31,6 +31,10 @@ tools:
   ## docker
   - command: docker
   - command: docker-compose
+  - command: docker-buildx
+    check:
+      type: path
+      value: /opt/homebrew/bin/docker-buildx
   - command: lazydocker
     description: "docker TUI client"
   - command: colima
