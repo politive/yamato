@@ -29,7 +29,7 @@ default_comments=()
 while IFS= read -r line; do default_domains+=("$line"); done < <(yq '.defaults[].domain' "$PRESET_FILE")
 while IFS= read -r line; do default_keys+=("$line"); done < <(yq '.defaults[].key' "$PRESET_FILE")
 while IFS= read -r line; do default_types+=("$line"); done < <(yq '.defaults[].type' "$PRESET_FILE")
-while IFS= read -r line; do default_values+=("$line"); done < <(yq '.defaults[].value | @json' "$PRESET_FILE")
+while IFS= read -r line; do default_values+=("$line"); done < <(yq '.defaults[].value' "$PRESET_FILE")
 while IFS= read -r line; do default_comments+=("$line"); done < <(yq '.defaults[].comment' "$PRESET_FILE")
 
 default_count=${#default_domains[@]}
@@ -49,7 +49,7 @@ for ((i=0; i<default_count; i++)); do
       run defaults write "$domain" "$key" -array "${arr[@]}"
     fi
   else
-    run defaults write "$domain" "$key" "-$type" "$value"
+    run defaults write "$domain" "$key" -$type $value
   fi
 
   if [ -n "$comment" ]; then
