@@ -1,0 +1,11 @@
+{
+    "window.commandCenter": true,
+    "editor.fontFamily": "HackGen Console NF, Menlo, Monaco, 'Courier New', monospace",
+    "workbench.settings.applyToAllProfiles": [
+        "editor.fontFamily"
+    ],
+    "editor.formatOnSave": true,
+    "[ruby]": {
+        "editor.defaultFormatter": "Shopify.ruby-lsp"
+    },
+}
